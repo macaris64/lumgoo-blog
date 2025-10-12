@@ -160,7 +160,7 @@ export const portfolio = {
       name: "GeoEqua (NASA Space Apps '24)",
       description: "A web application developed for the Human Development & the Environment challenge at the NASA Space Apps '24 hackathon. GeoEqua is a 'The Climate Change and Gender Inequality Risk Mapping Tool'. The project has been awarded the NASA 2024 Global Nominee.",
       image: "/images/projects/nasa-logo.jpg",
-      url: "https://geoequa.lumgoo.com",
+      url: "https://geoequa.vercel.app/",
       github: "https://github.com/macaris64/geoequa",
       technologies: ["Typescript", "React", "OpenAI", "LLM"],
       highlights: [
@@ -169,43 +169,6 @@ export const portfolio = {
         "United Nations Sustainable Development Goals (UN SDGs)",
       ],
       date: "2024"
-    },
-    {
-      name: "Bozdurgeç",
-      description: "Bozdurgeç is an iOS application that performs currency recognition and enables the exchange of recognized currency in various formats. It was developed for the Project Management lecture. It was developed using an image processing algorithm.",
-      image: "/images/education/pau-logo.png",
-      url: "",
-      github: "https://github.com/macaris64",
-      technologies: ["Swift", "OpenCV"],
-      highlights: [
-        "Pamukkale University Project Management Lecture",
-        "iOS Application"
-      ],
-      date: "2019"
-    },
-    {
-        name: "Wizard CRM",
-        description: "Wizard CRM",
-        image: "/images/education/pau-logo.png",
-        url: "",
-        github: "https://github.com/macaris64",
-        technologies: ["Django", "React", "REST", "MySQL"],
-        highlights: [
-            "Pamukkale University Thesis Project",
-        ],
-        date: "2018"
-    },
-    {
-        name: "Limos",
-        description: "Cafe - Restaurant Management System",
-        image: "/images/education/pau-logo.png",
-        url: "",
-        github: "https://github.com/macaris64",
-        technologies: ["Apache Cordova", "HTML", "CSS", "JavaScript"],
-        highlights: [
-            "Pamukkale University Project Management Lecture",
-        ],
-        date: "2018"
     },
   ],
 
