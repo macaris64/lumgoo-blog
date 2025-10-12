@@ -1,0 +1,873 @@
+---
+import Layout from '../components/Layout.astro';
+import { portfolio } from '../data/portfolio';
+import '../styles/global.css';
+
+const { profile, about, experience, education, projects, certifications, skills, volunteer } = portfolio;
+---
+
+<Layout title={`${profile.name} - ${profile.title}`} description={about.summary}>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="profile-image">
+        <img src={profile.photo} alt={profile.name} />
+      </div>
+      <div class="hero-text">
+        <h1 class="hero-title">{profile.name}</h1>
+        <p class="hero-subtitle">{profile.title}</p>
+        <p class="hero-location">📍 {profile.location}</p>
+        <div class="hero-links">
+          <a href={`mailto:${profile.email}`} class="hero-link">✉️ Email</a>
+          <a href={profile.github} target="_blank" class="hero-link">💻 GitHub</a>
+          <a href={profile.linkedin} target="_blank" class="hero-link">💼 LinkedIn</a>
+          <a href={profile.twitter} target="_blank" class="hero-link">🐦 Twitter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-content">
+      <p class="about-summary">{about.summary}</p>
+      <ul class="highlights-list">
+        {about.highlights.map(highlight => (
+          <li>✓ {highlight}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="section">
+    <h2 class="section-title">Work Experience</h2>
+    <div class="timeline">
+      {experience.map(job => (
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+            <div class="job-company">
+              <img src={job.logo} alt={job.company} class="company-logo" />
+              <div>
+                  <h3 class="job-title">{job.position}</h3>
+                  <p class="company-name">{job.company} • {job.location}</p>
+                </div>
+              </div>
+              <div class="job-date">
+                {new Date(job.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - 
+                {job.current ? 'Present' : new Date(job.endDate!).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+              </div>
+            </div>
+            <p class="job-description">{job.description}</p>
+            <ul class="achievements-list">
+              {job.achievements.map(achievement => (
+                <li>{achievement}</li>
+              ))}
+            </ul>
+            <div class="tech-tags">
+              {job.technologies.map(tech => (
+                <span class="tech-tag">{tech}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education" class="section">
+    <h2 class="section-title">Education</h2>
+    <div class="education-grid">
+      {education.map(edu => (
+        <div class="education-card">
+          <img src={edu.logo} alt={edu.institution} class="edu-logo" />
+          <h3 class="edu-degree">{edu.degree}</h3>
+          <p class="edu-field">{edu.field}</p>
+          <p class="edu-institution">{edu.institution}</p>
+          <p class="edu-date">
+            {new Date(edu.startDate).getFullYear()} - {new Date(edu.endDate).getFullYear()}
+          </p>
+          <p class="edu-gpa">GPA: {edu.gpa}</p>
+          <p class="edu-description">{edu.description}</p>
+          <ul class="edu-achievements">
+            {edu.achievements.map(achievement => (
+              <li>{achievement}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+      {projects.map(project => (
+        <div class="project-card">
+          <img src={project.image} alt={project.name} class="project-image" />
+          <div class="project-content">
+            <h3 class="project-name">{project.name}</h3>
+            <p class="project-description">{project.description}</p>
+            <ul class="project-highlights">
+              {project.highlights.map(highlight => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+            <div class="tech-tags">
+              {project.technologies.map(tech => (
+                <span class="tech-tag">{tech}</span>
+              ))}
+            </div>
+            <div class="project-links">
+              <a href={project.url} target="_blank" class="project-link">🌐 Live Demo</a>
+              <a href={project.github} target="_blank" class="project-link">💻 GitHub</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="certifications" class="section">
+    <h2 class="section-title">Certifications</h2>
+    <div class="certifications-grid">
+      {certifications.map(cert => (
+        <div class="cert-card">
+          <img src={cert.logo} alt={cert.issuer} class="cert-logo" />
+          <h3 class="cert-name">{cert.name}</h3>
+          <p class="cert-issuer">{cert.issuer}</p>
+          <p class="cert-date">{new Date(cert.date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+          <a href={cert.url} target="_blank" class="cert-link">View Credential →</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="section">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
+      {Object.entries(skills).map(([category, skillList]) => (
+        <div class="skill-category">
+          <h3 class="skill-category-name">{category}</h3>
+          <div class="skill-tags">
+            {skillList.map(skill => (
+              <span class="skill-tag">{skill}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Volunteer Section -->
+  <section id="volunteer" class="section">
+    <h2 class="section-title">Volunteer Work</h2>
+    <div class="volunteer-grid">
+      {volunteer.map(vol => (
+        <div class="volunteer-card">
+          <img src={vol.logo} alt={vol.organization} class="volunteer-logo" />
+          <h3 class="volunteer-role">{vol.role}</h3>
+          <p class="volunteer-org">{vol.organization}</p>
+          <p class="volunteer-date">
+            {new Date(vol.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - 
+            {vol.current ? 'Present' : new Date(vol.endDate!).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+          </p>
+          <p class="volunteer-description">{vol.description}</p>
+          <ul class="volunteer-activities">
+            {vol.activities.map(activity => (
+              <li>{activity}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    margin: -2rem -2rem 3rem -2rem;
+  }
+  
+  .hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+  
+  .profile-image img {
+    height: 250px;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  
+  .hero-text {
+    flex: 1;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hero-location {
+    font-size: 1.125rem;
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .hero-link {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  
+  .hero-link:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-2px);
+  }
+  
+  /* Sections */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto 4rem auto;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid #667eea;
+  }
+  
+  /* About Section */
+  .about-content {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2rem;
+  }
+  
+  .about-summary {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #374151;
+    margin-bottom: 2rem;
+  }
+  
+  .highlights-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .highlights-list li {
+    font-size: 1.125rem;
+    color: #4b5563;
+    padding-left: 1.5rem;
+  }
+  
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #e5e7eb;
+  }
+  
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+  }
+  
+  .timeline-marker {
+    position: absolute;
+    left: -2.5rem;
+    width: 1rem;
+    height: 1rem;
+    background: #667eea;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px #667eea;
+  }
+  
+  .timeline-content {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+  }
+  
+  .job-company {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .company-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+  }
+  
+  .job-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+  }
+  
+  .company-name {
+    color: #6b7280;
+  }
+  
+  .job-date {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+  
+  .job-description {
+    color: #4b5563;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  
+  .achievements-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .achievements-list li {
+    color: #4b5563;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  
+  .achievements-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+  }
+  
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .tech-tag {
+    background: #eff6ff;
+    color: #1e40af;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  /* Education Grid */
+  .education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2rem;
+  }
+  
+  .education-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2rem;
+  }
+  
+  .edu-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+  
+  .edu-degree {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+  }
+  
+  .edu-field {
+    font-size: 1.125rem;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+  }
+  
+  .edu-institution {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+  }
+  
+  .edu-date {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .edu-gpa {
+    color: #4b5563;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .edu-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .edu-achievements {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .edu-achievements li {
+    color: #4b5563;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  
+  .edu-achievements li::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    color: #fbbf24;
+  }
+  
+  /* Projects Grid */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2rem;
+  }
+  
+  .project-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  .project-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .project-content {
+    padding: 1.5rem;
+  }
+  
+  .project-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+  }
+  
+  .project-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .project-highlights {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .project-highlights li {
+    color: #059669;
+    font-weight: 500;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  
+  .project-highlights li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+  }
+  
+  .project-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .project-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  
+  .project-link:hover {
+    color: #764ba2;
+  }
+  
+  /* Certifications Grid */
+  .certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .cert-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .cert-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+  
+  .cert-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cert-issuer {
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cert-date {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cert-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  
+  .cert-link:hover {
+    color: #764ba2;
+  }
+  
+  /* Skills Grid */
+  .skills-grid {
+    display: grid;
+    gap: 2rem;
+  }
+  
+  .skill-category {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  
+  .skill-category-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+  }
+  
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .skill-tag {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  /* Volunteer Grid */
+  .volunteer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  .volunteer-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  
+  .volunteer-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+  
+  .volunteer-role {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+  }
+  
+  .volunteer-org {
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .volunteer-date {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .volunteer-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .volunteer-activities {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .volunteer-activities li {
+    color: #4b5563;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  
+  .volunteer-activities li::before {
+    content: '♥';
+    position: absolute;
+    left: 0;
+    color: #ef4444;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .projects-grid,
+    .certifications-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .section {
+      padding: 2rem 0;
+    }
+    
+    .section-title {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .hero-section {
+      padding: 2rem 1rem;
+    }
+    
+    .hero-content {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.5rem;
+    }
+    
+    .profile-image img {
+      width: 120px;
+      height: 120px;
+    }
+    
+    .hero-title {
+      font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+    
+    .hero-links {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .education-grid,
+    .projects-grid,
+    .volunteer-grid,
+    .certifications-grid,
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .job-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .job-date {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+    }
+    
+    .job-company {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    
+    .timeline-item {
+      padding-left: 1.5rem;
+    }
+    
+    .timeline-marker {
+      width: 10px;
+      height: 10px;
+      left: -5px;
+    }
+    
+    .project-image {
+      height: 180px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-section {
+      padding: 1.5rem 0.5rem;
+    }
+    
+    .section {
+      padding: 1.5rem 0;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+    }
+    
+    .hero-title {
+      font-size: 1.5rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+    
+    .hero-link {
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .about-summary,
+    .job-description,
+    .project-description,
+    .volunteer-description {
+      font-size: 0.9rem;
+    }
+    
+    .job-title,
+    .edu-degree,
+    .project-name,
+    .cert-name,
+    .volunteer-role {
+      font-size: 1.1rem;
+    }
+    
+    .company-logo,
+    .edu-logo,
+    .cert-logo,
+    .volunteer-logo {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .tech-tag,
+    .skill-tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+</style>

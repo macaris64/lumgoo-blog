@@ -1,0 +1,57 @@
+---
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+  baseUrl?: string;
+}
+
+const { currentPage, totalPages, hasNext, hasPrev, baseUrl = '' } = Astro.props;
+---
+
+{totalPages > 1 && (
+  <nav class="pagination" aria-label="Page navigation">
+    <div class="pagination-info">
+      Page {currentPage} / {totalPages}
+    </div>
+    
+    
+    <div class="pagination-links">
+      {hasPrev && (
+        <a 
+          href={currentPage === 2 ? '/' : `${baseUrl}/${currentPage - 1}`}
+          class="pagination-link pagination-prev"
+          aria-label="Previous page"
+        >
+          ← Previous
+        </a>
+      )}
+      
+      <div class="pagination-numbers">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+          <a
+            href={page === 1 ? '/' : `${baseUrl}/${page}`}
+            class={`pagination-link pagination-number ${
+              page === currentPage ? 'pagination-current' : ''
+            }`}
+            aria-label={`Page ${page}`}
+            aria-current={page === currentPage ? 'page' : undefined}
+          >
+            {page}
+          </a>
+        ))}
+      </div>
+      
+      {hasNext && (
+        <a 
+          href={`${baseUrl}/${currentPage + 1}`}
+          class="pagination-link pagination-next"
+          aria-label="Next page"
+        >
+          Next →
+        </a>
+      )}
+    </div>
+  </nav>
+)}

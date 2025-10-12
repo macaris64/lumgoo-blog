@@ -1,0 +1,87 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/dates';
+import { estimateReadingTime } from '../lib/readingTime';
+import TagLink from './TagLink.astro';
+
+export interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const readingTime = estimateReadingTime(post.body);
+---
+
+<article class="post-card">
+  <header class="post-header">
+    <div class="post-category">
+      <span class="category">{post.data.category}</span>
+      {post.data.subcategory && (
+        <span class="subcategory">→ {post.data.subcategory}</span>
+      )}
+      {post.data.aiGenerated && (
+        <span class="ai-badge">🤖 AI</span>
+      )}
+    </div>
+    <h2 class="post-title">
+      <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+    </h2>
+    <div class="post-meta">
+      <time datetime={post.data.date.toISOString()}>
+        {formatDate(post.data.date)}
+      </time>
+      <span class="reading-time">{readingTime} min read</span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p class="post-description">{post.data.description}</p>
+  </div>
+  
+  {post.data.tags.length > 0 && (
+    <footer class="post-footer">
+      <div class="post-tags">
+        {post.data.tags.map(tag => (
+          <TagLink tag={tag} />
+        ))}
+      </div>
+    </footer>
+  )}
+</article>
+
+<style>
+  .post-category {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .category {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  
+  .subcategory {
+    color: #6b7280;
+    font-weight: 500;
+  }
+  
+  .ai-badge {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    box-shadow: 0 1px 3px rgba(139, 92, 246, 0.3);
+  }
+</style>

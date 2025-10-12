@@ -1,0 +1,106 @@
+---
+import Layout from '../../components/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import FilterBar from '../../components/FilterBar.astro';
+import { paginate } from '../../lib/posts';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+  const { paginate } = await import('../../lib/posts');
+  const pagination = await paginate(1, 5);
+  const totalPages = pagination.totalPages;
+  
+  return Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: (i + 1).toString() },
+    props: { page: i + 1 },
+  }));
+}
+
+const { page } = Astro.props;
+const pagination = await paginate(page, 5);
+---
+
+<Layout title={`Blog - Page ${page}`}>
+  <div class="hero">
+    <h1>Blog</h1>
+    <p>Articles about Heliophysics and Space Sciences</p>
+  </div>
+
+  <section class="posts-section">
+    <h2>Latest Posts - Page {page}</h2>
+    
+    <FilterBar />
+    
+    {pagination.posts.length > 0 ? (
+      <>
+        {pagination.posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+        
+        <Pagination
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          hasNext={pagination.hasNext}
+          hasPrev={pagination.hasPrev}
+          baseUrl="/page"
+        />
+      </>
+    ) : (
+      <div class="no-posts">
+        <p>No posts found on this page.</p>
+      </div>
+    )}
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 1rem;
+  }
+  
+  .hero p {
+    font-size: 1.25rem;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .posts-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+  }
+  
+  .no-posts {
+    text-align: center;
+    padding: 3rem;
+    color: #6b7280;
+  }
+  
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2rem;
+    }
+    
+    .hero p {
+      font-size: 1rem;
+    }
+    
+    .posts-section h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>

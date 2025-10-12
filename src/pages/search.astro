@@ -1,0 +1,125 @@
+---
+import Layout from '../components/Layout.astro';
+import { getAllPosts } from '../lib/posts';
+import '../styles/global.css';
+
+const posts = await getAllPosts();
+---
+
+<Layout title="Search">
+  <div class="search-container">
+    <h1>Search</h1>
+    <p>Search blog posts</p>
+    
+    <input 
+      type="text" 
+      id="search-input" 
+      class="search-input" 
+      placeholder="Search by title, description or tag..."
+      autocomplete="off"
+    />
+    
+    <div id="search-results" class="search-results">
+      <div class="search-placeholder">
+        <p>Type in the search box above to find posts.</p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ posts }} is:inline>
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  
+  // Search data - in a real app, this would be fetched from /search.json
+  const searchData = posts.map(post => ({
+    title: post.data.title,
+    slug: post.slug,
+    description: post.data.description,
+    tags: post.data.tags,
+    date: post.data.date.toISOString(),
+    formattedDate: new Date(post.data.date).toLocaleDateString('en-US')
+  }));
+  
+  function performSearch(query) {
+    if (!query.trim()) {
+      searchResults.innerHTML = '<div class="search-placeholder"><p>Type in the search box above to find posts.</p></div>';
+      return;
+    }
+    
+    const results = searchData.filter(item => 
+      item.title.toLowerCase().includes(query.toLowerCase()) ||
+      item.description.toLowerCase().includes(query.toLowerCase()) ||
+      item.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+    );
+    
+    if (results.length === 0) {
+      searchResults.innerHTML = '<div class="no-results"><p>No posts match your search criteria.</p></div>';
+      return;
+    }
+    
+    const resultsHTML = results.map(item => `
+      <div class="search-result">
+        <h3><a href="/posts/${item.slug}">${item.title}</a></h3>
+        <p>${item.description}</p>
+        <div class="search-meta">
+          <span>${item.formattedDate}</span>
+          ${item.tags.length > 0 ? `<span>• ${item.tags.map(tag => `#${tag}`).join(', ')}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+    
+    searchResults.innerHTML = resultsHTML;
+  }
+  
+  // Debounce search
+  let searchTimeout;
+  searchInput.addEventListener('input', (e) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      performSearch(e.target.value);
+    }, 300);
+  });
+  
+  // Handle URL search params
+  const urlParams = new URLSearchParams(window.location.search);
+  const queryParam = urlParams.get('q');
+  if (queryParam) {
+    searchInput.value = queryParam;
+    performSearch(queryParam);
+  }
+</script>
+
+<style>
+  .search-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .search-container h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  .search-container > p {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 2rem;
+  }
+  
+  .search-placeholder,
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: #6b7280;
+  }
+  
+  @media (max-width: 768px) {
+    .search-container h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

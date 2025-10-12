@@ -1,0 +1,249 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a href="/" class="navbar-logo">
+      <span class="logo-icon">💫</span>
+      <span class="logo-text">Lumgoo</span>
+    </a>
+    
+    <button class="mobile-menu-toggle" aria-label="Toggle menu">
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+    </button>
+    
+    <ul class="navbar-menu">
+      <li>
+        <a 
+          href="/#about" 
+          class={`navbar-link ${currentPath === '/#about' ? 'active' : ''}`}
+        >
+          About
+        </a>
+      </li>
+      <li>
+        <a 
+          href="/#experience" 
+          class={`navbar-link ${currentPath === '/#experience' ? 'active' : ''}`}
+        >
+          Experience
+        </a>
+      </li>
+      <li>
+        <a 
+          href="/#projects" 
+          class={`navbar-link ${currentPath === '/#projects' ? 'active' : ''}`}
+        >
+          Projects
+        </a>
+      </li>
+      <li>
+        <a 
+          href="/blog" 
+          class={`navbar-link ${currentPath.startsWith('/blog') ? 'active' : ''}`}
+        >
+          Blog
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const menu = document.querySelector('.navbar-menu');
+    
+    if (toggle && menu) {
+      toggle.addEventListener('click', () => {
+        menu.classList.toggle('active');
+        toggle.classList.toggle('active');
+      });
+      
+      // Close menu when clicking a link
+      const links = menu.querySelectorAll('.navbar-link');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          menu.classList.remove('active');
+          toggle.classList.remove('active');
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (!toggle.contains(target) && !menu.contains(target)) {
+          menu.classList.remove('active');
+          toggle.classList.remove('active');
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .navbar {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    transition: color 0.2s;
+    z-index: 1001;
+  }
+  
+  .navbar-logo:hover {
+    color: #3b82f6;
+  }
+  
+  .logo-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+  
+  .logo-text {
+    font-size: 1.25rem;
+  }
+  
+  .mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+  }
+  
+  .hamburger {
+    width: 25px;
+    height: 3px;
+    background-color: #1f2937;
+    transition: all 0.3s ease;
+    border-radius: 3px;
+  }
+  
+  .mobile-menu-toggle.active .hamburger:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+  
+  .mobile-menu-toggle.active .hamburger:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .mobile-menu-toggle.active .hamburger:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+  
+  .navbar-menu {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    display: block;
+  }
+  
+  .navbar-link:hover {
+    color: #3b82f6;
+    background: #eff6ff;
+  }
+  
+  .navbar-link.active {
+    color: #3b82f6;
+    background: #eff6ff;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar-container {
+      padding: 1rem;
+    }
+    
+    .logo-text {
+      font-size: 1rem;
+    }
+    
+    .mobile-menu-toggle {
+      display: flex;
+    }
+    
+    .navbar-menu {
+      position: fixed;
+      top: 60px;
+      right: -100%;
+      width: 250px;
+      height: calc(100vh - 60px);
+      background: white;
+      flex-direction: column;
+      gap: 0;
+      padding: 2rem 1rem;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+    }
+    
+    .navbar-menu.active {
+      right: 0;
+    }
+    
+    .navbar-menu li {
+      width: 100%;
+    }
+    
+    .navbar-link {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      text-align: left;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .navbar-container {
+      padding: 0.75rem;
+    }
+    
+    .logo-icon {
+      font-size: 1.5rem;
+    }
+    
+    .logo-text {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+

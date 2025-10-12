@@ -1,0 +1,136 @@
+---
+import Layout from '../../../components/Layout.astro';
+import FilterBar from '../../../components/FilterBar.astro';
+import { getAIGeneratedPosts } from '../../../lib/posts';
+import '../../../styles/global.css';
+
+const allPosts = await getAIGeneratedPosts();
+---
+
+<Layout title="AI-Generated Articles - Lumgoo">
+  <div class="hero">
+    <div class="back-link">
+      <a href="/blog">← Back to Blog</a>
+    </div>
+    <h1>🤖 AI-Generated Articles</h1>
+    <p>Articles generated using AI</p>
+  </div>
+
+  <section class="posts-section">
+    <h2>All AI-Generated Articles ({allPosts.length})</h2>
+    
+    <FilterBar posts={allPosts} />
+    
+    <div id="posts-container">
+      {allPosts.length > 0 ? (
+        <>
+          <div id="posts-list">
+            <!-- Posts will be dynamically rendered by FilterBar JavaScript -->
+          </div>
+          
+          <div id="pagination-container">
+            <!-- Pagination will be dynamically rendered by FilterBar JavaScript -->
+          </div>
+        </>
+      ) : (
+        <div class="no-posts">
+          <p>No AI-generated articles published yet.</p>
+          <a href="/blog" class="back-btn">← Back to Blog</a>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    position: relative;
+  }
+  
+  .back-link {
+    margin-bottom: 1rem;
+  }
+  
+  .back-link a {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .back-link a:hover {
+    color: #3b82f6;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 1rem;
+  }
+  
+  .hero p {
+    font-size: 1.25rem;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .posts-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+  }
+  
+  .no-posts {
+    text-align: center;
+    padding: 3rem;
+    color: #6b7280;
+  }
+  
+  .back-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .back-btn:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2rem;
+    }
+    
+    .hero p {
+      font-size: 1rem;
+    }
+    
+    .posts-section h2 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero h1 {
+      font-size: 1.5rem;
+    }
+    
+    .hero p {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+

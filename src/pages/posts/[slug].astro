@@ -1,0 +1,255 @@
+---
+import Layout from '../../components/Layout.astro';
+import Prose from '../../components/Prose.astro';
+import TagLink from '../../components/TagLink.astro';
+import { formatDate } from '../../lib/dates';
+import { estimateReadingTime } from '../../lib/readingTime';
+import { getAllPosts } from '../../lib/posts';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const readingTime = estimateReadingTime(post.body);
+const allPosts = await getAllPosts();
+const currentIndex = allPosts.findIndex(p => p.slug === post.slug);
+const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+---
+
+<Layout 
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  publishedTime={post.data.date.toISOString()}
+  tags={post.data.tags}
+>
+  <article class="post">
+    <header class="post-header">
+      <div class="post-category">
+        <span class="category">{post.data.category}</span>
+        {post.data.subcategory && (
+          <span class="subcategory">→ {post.data.subcategory}</span>
+        )}
+        {post.data.aiGenerated && (
+          <span class="ai-badge">🤖 AI-Generated</span>
+        )}
+      </div>
+      
+      <h1 class="post-title">{post.data.title}</h1>
+      
+      <div class="post-meta">
+        <time datetime={post.data.date.toISOString()}>
+          {formatDate(post.data.date)}
+        </time>
+        <span class="reading-time">{readingTime} min read</span>
+      </div>
+      
+      {post.data.tags.length > 0 && (
+        <div class="post-tags">
+          {post.data.tags.map(tag => (
+            <TagLink tag={tag} />
+          ))}
+        </div>
+      )}
+    </header>
+    
+    <Prose>
+      <Content />
+    </Prose>
+  </article>
+  
+  <nav class="post-navigation">
+    {prevPost && (
+      <div class="nav-prev">
+        <a href={`/posts/${prevPost.slug}`} class="nav-link">
+          <span class="nav-label">← Previous Post</span>
+          <span class="nav-title">{prevPost.data.title}</span>
+        </a>
+      </div>
+    )}
+    
+    {nextPost && (
+      <div class="nav-next">
+        <a href={`/posts/${nextPost.slug}`} class="nav-link">
+          <span class="nav-label">Next Post →</span>
+          <span class="nav-title">{nextPost.data.title}</span>
+        </a>
+      </div>
+    )}
+  </nav>
+</Layout>
+
+<style>
+  .post {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .post-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .post-category {
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .category {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  
+  .subcategory {
+    color: #6b7280;
+    font-weight: 500;
+  }
+  
+  .ai-badge {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    box-shadow: 0 2px 4px rgba(139, 92, 246, 0.2);
+    animation: subtle-pulse 3s ease-in-out infinite;
+  }
+  
+  @keyframes subtle-pulse {
+    0%, 100% {
+      box-shadow: 0 2px 4px rgba(139, 92, 246, 0.2);
+    }
+    50% {
+      box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+    }
+  }
+  
+  .post-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .post-meta {
+    display: flex;
+    gap: 1rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .post-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .nav-prev,
+  .nav-next {
+    display: flex;
+  }
+  
+  .nav-next {
+    justify-content: flex-end;
+  }
+  
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #374151;
+    transition: all 0.2s;
+    max-width: 300px;
+  }
+  
+  .nav-link:hover {
+    border-color: #3b82f6;
+    background-color: #f8fafc;
+  }
+  
+  .nav-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+  
+  .nav-title {
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  @media (max-width: 768px) {
+    .post-title {
+      font-size: 2rem;
+    }
+    
+    .post-category {
+      font-size: 0.8rem;
+    }
+    
+    .ai-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+    }
+    
+    .post-navigation {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .nav-link {
+      max-width: none;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .post-title {
+      font-size: 1.5rem;
+    }
+    
+    .post-category {
+      font-size: 0.75rem;
+    }
+    
+    .category,
+    .ai-badge {
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+    }
+  }
+</style>

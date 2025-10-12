@@ -1,0 +1,764 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  posts?: CollectionEntry<'posts'>[];
+}
+
+const { posts: propsPosts } = Astro.props;
+
+// Props'tan gelen postları kullan, yoksa boş array
+const posts = propsPosts || [];
+
+// Tüm kategorileri, alt kategorileri ve tag'leri topla
+const categories = [...new Set(posts.map(post => post.data.category))].sort();
+const subcategories = [...new Set(posts.map(post => post.data.subcategory).filter(Boolean))].sort();
+const tags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
+---
+
+<div class="filter-container">
+  <div class="filter-header" id="filter-header">
+    <div class="filter-title">
+      <h3>Filters</h3>
+      <span id="active-filter-count" class="filter-count">0 active</span>
+    </div>
+    <div class="filter-controls">
+      <button id="clear-all-filters" class="clear-all-btn">Clear All</button>
+      <button id="toggle-filters" class="toggle-btn">
+        <span class="toggle-icon">▼</span>
+      </button>
+    </div>
+  </div>
+  
+  <div id="filter-content" class="filter-content">
+    <div class="filter-sections">
+      <!-- Category Filter -->
+      <div class="filter-section">
+        <label class="filter-label">Category</label>
+        <div class="filter-options">
+          {categories.map(category => (
+            <button 
+              class="filter-option" 
+              data-filter-type="category" 
+              data-filter-value={category}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <!-- Subcategory Filter -->
+      {subcategories.length > 0 && (
+        <div class="filter-section">
+          <label class="filter-label">Subcategory</label>
+          <div class="filter-options">
+            {subcategories.map(subcategory => (
+              <button 
+                class="filter-option" 
+                data-filter-type="subcategory" 
+                data-filter-value={subcategory}
+              >
+                {subcategory}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      <!-- Tags Filter -->
+      <div class="filter-section">
+        <label class="filter-label">Tags</label>
+        <div class="filter-options">
+          {tags.map(tag => (
+            <button 
+              class="filter-option" 
+              data-filter-type="tag" 
+              data-filter-value={tag}
+            >
+              #{tag}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Active Filters -->
+    <div id="active-filters" class="active-filters">
+      <!-- Active filters will be dynamically added here -->
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ posts, categories, subcategories, tags }} is:inline>
+  class FilterManager {
+    constructor() {
+      this.activeFilters = new Set();
+      this.posts = posts;
+      this.filteredPosts = [...posts];
+      this.currentPage = 1;
+      this.postsPerPage = 5;
+      this.filterOptions = document.querySelectorAll('.filter-option');
+      this.activeFiltersContainer = document.getElementById('active-filters');
+      this.clearAllBtn = document.getElementById('clear-all-filters');
+      this.toggleBtn = document.getElementById('toggle-filters');
+      this.filterContent = document.getElementById('filter-content');
+      this.filterHeader = document.getElementById('filter-header');
+      this.activeFilterCount = document.getElementById('active-filter-count');
+      this.postsContainer = document.getElementById('posts-container');
+      this.postsList = document.getElementById('posts-list');
+      this.paginationContainer = document.getElementById('pagination-container');
+      this.isOpen = false;
+      
+      this.init();
+    }
+    
+    init() {
+      this.filterOptions.forEach(option => {
+        option.addEventListener('click', (e) => this.toggleFilter(e.target));
+      });
+      
+      this.clearAllBtn.addEventListener('click', () => this.clearAllFilters());
+      this.toggleBtn.addEventListener('click', () => this.toggleAccordion());
+      this.filterHeader.addEventListener('click', () => this.toggleAccordion());
+      
+      // Event delegation for pagination - attach once, works for all dynamically created pagination buttons
+      this.paginationContainer.addEventListener('click', (e) => {
+        const target = e.target.closest('.pagination-link[data-page]');
+        if (target) {
+          e.preventDefault();
+          e.stopPropagation();
+          const page = parseInt(target.dataset.page);
+          if (page && !isNaN(page)) {
+            this.goToPage(page);
+          }
+        }
+      });
+      
+      // Load filters from URL
+      this.loadFiltersFromURL();
+      
+      // Start with closed accordion
+      this.closeAccordion();
+      
+      // Initialize posts and pagination
+      if (this.activeFilters.size === 0) {
+        // If no filters, render first page
+        this.filteredPosts = [...this.posts];
+        this.renderPosts();
+      }
+    }
+    
+    toggleAccordion() {
+      if (this.isOpen) {
+        this.closeAccordion();
+      } else {
+        this.openAccordion();
+      }
+    }
+    
+    openAccordion() {
+      this.isOpen = true;
+      this.filterContent.style.display = 'block';
+      this.toggleBtn.querySelector('.toggle-icon').textContent = '▲';
+      this.filterContent.style.maxHeight = this.filterContent.scrollHeight + 'px';
+    }
+    
+    closeAccordion() {
+      this.isOpen = false;
+      this.filterContent.style.maxHeight = '0px';
+      this.toggleBtn.querySelector('.toggle-icon').textContent = '▼';
+      setTimeout(() => {
+        if (!this.isOpen) {
+          this.filterContent.style.display = 'none';
+        }
+      }, 300);
+    }
+    
+    toggleFilter(button) {
+      const filterType = button.dataset.filterType;
+      const filterValue = button.dataset.filterValue;
+      const filterKey = `${filterType}:${filterValue}`;
+      
+      if (this.activeFilters.has(filterKey)) {
+        this.removeFilter(filterKey);
+        button.classList.remove('active');
+      } else {
+        this.addFilter(filterKey, filterType, filterValue);
+        button.classList.add('active');
+      }
+      
+      this.updateURL();
+      this.filterPosts();
+    }
+    
+    addFilter(filterKey, filterType, filterValue) {
+      this.activeFilters.add(filterKey);
+      this.renderActiveFilter(filterKey, filterType, filterValue);
+      this.updateActiveFilterCount();
+    }
+    
+    removeFilter(filterKey) {
+      this.activeFilters.delete(filterKey);
+      this.removeActiveFilterElement(filterKey);
+      this.updateActiveFilterCount();
+      
+      // Deactivate the related button
+      const button = document.querySelector(`[data-filter-type="${filterKey.split(':')[0]}"][data-filter-value="${filterKey.split(':')[1]}"]`);
+      if (button) {
+        button.classList.remove('active');
+      }
+    }
+    
+    updateActiveFilterCount() {
+      const count = this.activeFilters.size;
+      this.activeFilterCount.textContent = `${count} active`;
+      
+      // Open accordion if filters are active
+      if (count > 0 && !this.isOpen) {
+        this.openAccordion();
+      }
+    }
+    
+    renderActiveFilter(filterKey, filterType, filterValue) {
+      const filterElement = document.createElement('div');
+      filterElement.className = 'active-filter';
+      filterElement.dataset.filterKey = filterKey;
+      
+      const typeLabel = {
+        'category': 'Category',
+        'subcategory': 'Subcategory', 
+        'tag': 'Tag'
+      }[filterType];
+      
+      filterElement.innerHTML = `
+        <span class="filter-type">${typeLabel}:</span>
+        <span class="filter-value">${filterValue}</span>
+        <button class="remove-filter" data-filter-key="${filterKey}">×</button>
+      `;
+      
+      // Remove button event listener
+      filterElement.querySelector('.remove-filter').addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.removeFilter(filterKey);
+        this.updateURL();
+        this.filterPosts();
+      });
+      
+      this.activeFiltersContainer.appendChild(filterElement);
+    }
+    
+    removeActiveFilterElement(filterKey) {
+      const element = document.querySelector(`[data-filter-key="${filterKey}"]`);
+      if (element) {
+        element.remove();
+      }
+    }
+    
+    clearAllFilters() {
+      this.activeFilters.clear();
+      this.activeFiltersContainer.innerHTML = '';
+      
+      // Deactivate all buttons
+      this.filterOptions.forEach(option => {
+        option.classList.remove('active');
+      });
+      
+      this.updateActiveFilterCount();
+      this.updateURL();
+      this.filterPosts();
+    }
+    
+    filterPosts() {
+      // Apply filters
+      if (this.activeFilters.size === 0) {
+        this.filteredPosts = [...this.posts];
+      } else {
+        this.filteredPosts = this.posts.filter(post => {
+          return Array.from(this.activeFilters).some(filterKey => {
+            const [filterType, filterValue] = filterKey.split(':');
+            
+            switch (filterType) {
+              case 'category':
+                return post.data.category === filterValue;
+              case 'subcategory':
+                return post.data.subcategory === filterValue;
+              case 'tag':
+                return post.data.tags.includes(filterValue);
+              default:
+                return false;
+            }
+          });
+        });
+      }
+      
+      this.currentPage = 1; // Reset to page 1 when filter changes
+      this.renderPosts();
+    }
+    
+    renderPosts() {
+      const startIndex = (this.currentPage - 1) * this.postsPerPage;
+      const endIndex = startIndex + this.postsPerPage;
+      const postsToShow = this.filteredPosts.slice(startIndex, endIndex);
+      
+      // Clear existing post cards
+      this.postsList.innerHTML = '';
+      
+      // Create new post cards
+      postsToShow.forEach(post => {
+        const postCard = this.createPostCard(post);
+        this.postsList.appendChild(postCard);
+      });
+      
+      this.updatePagination();
+    }
+    
+    createPostCard(post) {
+      const card = document.createElement('article');
+      card.className = 'post-card';
+      
+      // Create post card HTML
+      const readingTime = Math.ceil(post.body.split(' ').length / 200); // Approximate reading time
+      const dateObj = new Date(post.data.date);
+      const date = dateObj.toLocaleDateString('en-US');
+      const isoDate = dateObj.toISOString();
+      
+      card.innerHTML = `
+        <header class="post-header">
+          <div class="post-category">
+            <span class="category">${post.data.category}</span>
+            ${post.data.subcategory ? `<span class="subcategory">→ ${post.data.subcategory}</span>` : ''}
+            ${post.data.aiGenerated ? `<span class="ai-badge">🤖 AI</span>` : ''}
+          </div>
+          <h2 class="post-title">
+            <a href="/posts/${post.slug}">${post.data.title}</a>
+          </h2>
+          <div class="post-meta">
+            <time datetime="${isoDate}">${date}</time>
+            <span class="reading-time">${readingTime} min read</span>
+          </div>
+        </header>
+        
+        <div class="post-content">
+          <p class="post-description">${post.data.description}</p>
+        </div>
+        
+        ${post.data.tags.length > 0 ? `
+          <footer class="post-footer">
+            <div class="post-tags">
+              ${post.data.tags.map(tag => `<a href="/tags/${encodeURIComponent(tag)}" class="tag-link">#${tag}</a>`).join('')}
+            </div>
+          </footer>
+        ` : ''}
+      `;
+      
+      return card;
+    }
+    
+    updatePagination() {
+      const totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
+      
+      if (this.filteredPosts.length === 0) {
+        this.paginationContainer.style.display = 'none';
+        return;
+      }
+      
+      this.paginationContainer.style.display = 'block';
+      
+      // Always recreate pagination to avoid event listener accumulation
+      this.paginationContainer.innerHTML = this.createPaginationHTML(totalPages);
+    }
+    
+    updateExistingPaginationLinks(pagination, totalPages) {
+      const links = pagination.querySelectorAll('.pagination-link');
+      links.forEach(link => {
+        // Remove existing hrefs and add data-page
+        link.removeAttribute('href');
+        const text = link.textContent.trim();
+        
+        if (text === '← Previous') {
+          link.dataset.page = this.currentPage - 1;
+          link.style.display = this.currentPage > 1 ? 'inline-block' : 'none';
+        } else if (text === 'Next →') {
+          link.dataset.page = this.currentPage + 1;
+          link.style.display = this.currentPage < totalPages ? 'inline-block' : 'none';
+        } else if (!isNaN(parseInt(text))) {
+          const pageNum = parseInt(text);
+          link.dataset.page = pageNum;
+          link.classList.toggle('pagination-current', pageNum === this.currentPage);
+          link.style.display = pageNum <= totalPages ? 'inline-block' : 'none';
+        }
+        
+        // Event listener ekle
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const page = parseInt(e.target.dataset.page);
+          if (page && page !== this.currentPage) {
+            this.goToPage(page);
+          }
+        });
+      });
+    }
+    
+    createPaginationHTML(totalPages) {
+      if (totalPages <= 1) return '';
+      
+      const hasPrev = this.currentPage > 1;
+      const hasNext = this.currentPage < totalPages;
+      
+      let html = `
+        <nav class="pagination" aria-label="Page navigation">
+          <div class="pagination-info">
+            Page ${this.currentPage} / ${totalPages} (${this.filteredPosts.length} articles)
+          </div>
+          
+          <div class="pagination-links">
+      `;
+      
+      // Previous button
+      if (hasPrev) {
+        html += `
+          <button class="pagination-link pagination-prev" data-page="${this.currentPage - 1}">
+            ← Previous
+          </button>
+        `;
+      }
+      
+      // Page numbers
+      html += '<div class="pagination-numbers">';
+      for (let i = 1; i <= totalPages; i++) {
+        const isActive = i === this.currentPage ? 'pagination-current' : '';
+        html += `
+          <button class="pagination-link pagination-number ${isActive}" data-page="${i}">
+            ${i}
+          </button>
+        `;
+      }
+      html += '</div>';
+      
+      // Next button
+      if (hasNext) {
+        html += `
+          <button class="pagination-link pagination-next" data-page="${this.currentPage + 1}">
+            Next →
+          </button>
+        `;
+      }
+      
+      html += `
+          </div>
+        </nav>
+      `;
+      
+      return html;
+    }
+    
+    goToPage(page) {
+      this.currentPage = page;
+      this.renderPosts();
+    }
+    
+    
+    updateURL() {
+      const url = new URL(window.location);
+      url.searchParams.delete('filters');
+      
+      if (this.activeFilters.size > 0) {
+        const filtersArray = Array.from(this.activeFilters);
+        url.searchParams.set('filters', filtersArray.join(','));
+      }
+      
+      window.history.pushState({}, '', url);
+    }
+    
+    loadFiltersFromURL() {
+      const url = new URL(window.location);
+      const filtersParam = url.searchParams.get('filters');
+      
+      if (filtersParam) {
+        const filters = filtersParam.split(',');
+        filters.forEach(filterKey => {
+          const [filterType, filterValue] = filterKey.split(':');
+          this.activeFilters.add(filterKey);
+          
+          // Activate button
+          const button = document.querySelector(`[data-filter-type="${filterType}"][data-filter-value="${filterValue}"]`);
+          if (button) {
+            button.classList.add('active');
+          }
+          
+          // Create active filter element
+          this.renderActiveFilter(filterKey, filterType, filterValue);
+        });
+        
+        this.filterPosts();
+      }
+    }
+  }
+  
+  // Initialize filter manager when page loads (singleton pattern)
+  let filterManagerInstance = null;
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    if (filterManagerInstance) {
+      return;
+    }
+    
+    filterManagerInstance = new FilterManager();
+  });
+</script>
+
+<style>
+  .filter-container {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+  }
+  
+  .filter-header:hover {
+    background-color: #f1f5f9;
+  }
+  
+  .filter-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .filter-title h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
+  
+  .filter-count {
+    background: #3b82f6;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  
+  .toggle-btn:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+  }
+  
+  .clear-all-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .clear-all-btn:hover {
+    background: #dc2626;
+  }
+  
+  .filter-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    max-height: 0;
+  }
+  
+  .filter-sections {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+  }
+  
+  .filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .filter-label {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .filter-option {
+    background: white;
+    border: 1px solid #d1d5db;
+    color: #374151;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .filter-option:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+  }
+  
+  .filter-option.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+  }
+  
+  .active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  
+  .active-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #3b82f6;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+  }
+  
+  .filter-type {
+    font-weight: 500;
+    opacity: 0.9;
+  }
+  
+  .filter-value {
+    font-weight: 600;
+  }
+  
+  .remove-filter {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+  }
+  
+  .remove-filter:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    .filter-container {
+      padding: 1rem;
+    }
+    
+    .filter-header {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: stretch;
+    }
+    
+    .filter-title {
+      justify-content: space-between;
+      font-size: 1.25rem;
+    }
+    
+    .filter-controls {
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    
+    .filter-options {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 0.5rem;
+    }
+    
+    .filter-option {
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .active-filter-badge {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .filter-container {
+      padding: 0.75rem;
+    }
+    
+    .filter-title {
+      font-size: 1.1rem;
+    }
+    
+    .filter-option {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
+    }
+    
+    .clear-filters-btn {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
+    }
+    
+    .active-filter-badge {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.5rem;
+    }
+    
+    .filter-type {
+      display: none;
+    }
+  }
+</style>
