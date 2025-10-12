@@ -1,30 +1,30 @@
 # Astro Blog
 
-Modern statik blog - Astro 4 ve TypeScript ile oluşturulmuş, tamamen statik çalışan bir blog sistemi.
+Modern static blog - A fully static blog system built with Astro 4 and TypeScript.
 
-## 🚀 Özellikler
+## 🚀 Features
 
-- ✅ **Astro 4** ile statik site oluşturma
-- ✅ **TypeScript** desteği
-- ✅ **Markdown/MDX** içerik yönetimi
-- ✅ **Content Collections** ile tip güvenliği
-- ✅ **Shiki** ile kod vurgulama
-- ✅ **RSS** ve **Sitemap** otomatik oluşturma
-- ✅ **SEO** optimizasyonu
-- ✅ **Responsive** tasarım
-- ✅ **Client-side** arama
-- ✅ **Etiket** sistemi
-- ✅ **Sayfalama** desteği
+- ✅ Static site generation with **Astro 4**
+- ✅ **TypeScript** support
+- ✅ **Markdown/MDX** content management
+- ✅ Type safety with **Content Collections**
+- ✅ Code highlighting with **Shiki**
+- ✅ Automatic **RSS** and **Sitemap** generation
+- ✅ **SEO** optimization
+- ✅ **Responsive** design
+- ✅ **Client-side** search
+- ✅ **Tag** system
+- ✅ **Pagination** support
 
-## 🛠️ Teknoloji Stack
+## 🛠️ Technology Stack
 
-- **Astro 4** - Statik site oluşturucu
-- **TypeScript** - Tip güvenliği
-- **@astrojs/mdx** - MDX desteği
-- **Shiki** - Kod vurgulama
-- **Zod** - Şema validasyonu
+- **Astro 4** - Static site generator
+- **TypeScript** - Type safety
+- **@astrojs/mdx** - MDX support
+- **Shiki** - Code highlighting
+- **Zod** - Schema validation
 
-## 📁 Proje Yapısı
+## 📁 Project Structure
 
 ```
 .
@@ -37,83 +37,83 @@ Modern statik blog - Astro 4 ve TypeScript ile oluşturulmuş, tamamen statik ç
 │ └── favicon.svg
 ├── src/
 │ ├── content/
-│ │ ├── config.ts          # Content collection şeması
+│ │ ├── config.ts          # Content collection schema
 │ │ └── posts/
-│ │     └── hello-world.md # Örnek yazı
+│ │     └── hello-world.md # Sample post
 │ ├── components/
-│ │ ├── Layout.astro       # Ana layout
-│ │ ├── PostCard.astro     # Yazı kartı
-│ │ ├── Pagination.astro   # Sayfalama
-│ │ ├── TagLink.astro      # Etiket linki
-│ │ └── Prose.astro        # İçerik stilleri
+│ │ ├── Layout.astro       # Main layout
+│ │ ├── PostCard.astro     # Post card
+│ │ ├── Pagination.astro   # Pagination
+│ │ ├── TagLink.astro      # Tag link
+│ │ └── Prose.astro        # Content styles
 │ ├── lib/
-│ │ ├── posts.ts           # Yazı yardımcıları
-│ │ ├── dates.ts           # Tarih formatları
-│ │ └── readingTime.ts     # Okuma süresi
+│ │ ├── posts.ts           # Post helpers
+│ │ ├── dates.ts           # Date formats
+│ │ └── readingTime.ts     # Reading time
 │ ├── pages/
-│ │ ├── index.astro        # Ana sayfa
+│ │ ├── index.astro        # Home page
 │ │ ├── posts/
-│ │ │ └── [slug].astro     # Yazı detay
+│ │ │ └── [slug].astro     # Post detail
 │ │ ├── tags/
-│ │ │ └── [tag].astro      # Etiket sayfası
-│ │ ├── search.astro       # Arama sayfası
-│ │ ├── search.json.ts     # Arama API
+│ │ │ └── [tag].astro      # Tag page
+│ │ ├── search.astro       # Search page
+│ │ ├── search.json.ts     # Search API
 │ │ ├── rss.xml.ts         # RSS feed
 │ │ └── sitemap.xml.ts     # Sitemap
 │ └── styles/
-│     ├── global.css       # Global stiller
-│     └── card.module.css  # Kart stilleri
+│     ├── global.css       # Global styles
+│     └── card.module.css  # Card styles
 └── scripts/
-    └── new-post.mjs       # Yeni yazı oluşturma
+    └── new-post.mjs       # Create new post
 ```
 
-## 🚀 Kurulum
+## 🚀 Installation
 
-1. **Bağımlılıkları yükleyin:**
+1. **Install dependencies:**
 
    ```bash
    npm install
    ```
 
-2. **Geliştirme sunucusunu başlatın:**
+2. **Start the development server:**
 
    ```bash
    npm run dev
    ```
 
-3. **Tarayıcıda açın:**
+3. **Open in browser:**
    ```
    http://localhost:4321
    ```
 
-## 📝 Yeni Yazı Ekleme
+## 📝 Adding New Posts
 
-### Manuel Yöntem
+### Manual Method
 
-`src/content/posts/` dizinine yeni bir `.md` veya `.mdx` dosyası ekleyin:
+Add a new `.md` or `.mdx` file to the `src/content/posts/` directory:
 
 ```markdown
 ---
-title: "Yazı Başlığı"
-slug: "yazi-basligi"
-description: "Yazı açıklaması"
+title: "Post Title"
+slug: "post-title"
+description: "Post description"
 date: 2025-10-12
-tags: ["etiket1", "etiket2"]
+tags: ["tag1", "tag2"]
 draft: false
 ---
 
-# Yazı İçeriği
+# Post Content
 
-Yazınızın içeriği buraya gelir...
+Your post content goes here...
 ```
 
-### Otomatik Yöntem
+### Automated Method
 
 ```bash
 npm run new-post
 ```
 
-## 🏗️ Build ve Deploy
+## 🏗️ Build and Deploy
 
 ```bash
 # Build
@@ -123,70 +123,70 @@ npm run build
 npm run preview
 ```
 
-Build çıktısı `dist/` dizininde oluşturulur.
+Build output is generated in the `dist/` directory.
 
-## 📄 Sayfalar
+## 📄 Pages
 
-- **Ana Sayfa** (`/`) - Tüm yazıların listesi (sayfalama ile)
-- **Yazı Detay** (`/posts/[slug]`) - Tekil yazı görüntüleme
-- **Etiket Sayfası** (`/tags/[tag]`) - Belirli etikete sahip yazılar
-- **Arama** (`/search`) - Client-side arama
-- **RSS Feed** (`/rss.xml`) - RSS beslemesi
+- **Home Page** (`/`) - List of all posts (with pagination)
+- **Post Detail** (`/posts/[slug]`) - Individual post view
+- **Tag Page** (`/tags/[tag]`) - Posts with specific tag
+- **Search** (`/search`) - Client-side search
+- **RSS Feed** (`/rss.xml`) - RSS feed
 - **Sitemap** (`/sitemap.xml`) - XML sitemap
 
-## 🎨 Özelleştirme
+## 🎨 Customization
 
-### Stiller
+### Styles
 
-- `src/styles/global.css` - Global CSS stilleri
-- `src/styles/card.module.css` - Kart bileşeni stilleri
+- `src/styles/global.css` - Global CSS styles
+- `src/styles/card.module.css` - Card component styles
 
-### Bileşenler
+### Components
 
-- `src/components/` - Tüm Astro bileşenleri
-- `src/lib/` - Yardımcı fonksiyonlar
+- `src/components/` - All Astro components
+- `src/lib/` - Helper functions
 
-### İçerik Şeması
+### Content Schema
 
-`src/content/config.ts` dosyasında yazı şemasını özelleştirebilirsiniz.
+You can customize the post schema in the `src/content/config.ts` file.
 
-## 📊 SEO Özellikleri
+## 📊 SEO Features
 
-- ✅ Meta etiketleri
-- ✅ Open Graph etiketleri
-- ✅ Twitter Card etiketleri
-- ✅ Canonical URL'ler
+- ✅ Meta tags
+- ✅ Open Graph tags
+- ✅ Twitter Card tags
+- ✅ Canonical URLs
 - ✅ RSS feed
 - ✅ XML sitemap
-- ✅ Okuma süresi hesaplama
+- ✅ Reading time calculation
 
-## 🔍 Arama
+## 🔍 Search
 
-Blog, client-side arama özelliği içerir. Arama şu alanlarda çalışır:
+The blog includes a client-side search feature. Search works across:
 
-- Yazı başlığı
-- Yazı açıklaması
-- Etiketler
+- Post title
+- Post description
+- Tags
 
-## 📱 Responsive Tasarım
+## 📱 Responsive Design
 
-Blog, tüm cihazlarda düzgün görüntülenmek üzere responsive olarak tasarlanmıştır:
+The blog is designed to be responsive and display properly on all devices:
 
 - Desktop (1200px+)
 - Tablet (768px - 1199px)
-- Mobile (767px ve altı)
+- Mobile (767px and below)
 
-## 🚀 Performans
+## 🚀 Performance
 
-- Statik site oluşturma ile hızlı yükleme
-- Optimize edilmiş CSS
+- Fast loading with static site generation
+- Optimized CSS
 - Minimal JavaScript
-- SEO dostu URL yapısı
+- SEO-friendly URL structure
 
-## 📄 Lisans
+## 📄 License
 
-Bu proje MIT lisansı altında lisanslanmıştır.
+This project is licensed under the MIT License.
 
 ---
 
-**Astro Blog** - Modern statik blog çözümü 🚀
+**Astro Blog** - Modern static blog solution 🚀
