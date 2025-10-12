@@ -153,6 +153,7 @@ export const portfolio = {
       highlights: [
         "NASA Space Apps '25",
         "Build a Space Biology Knowledge Engine",
+        "https://www.spaceappschallenge.org/2025/find-a-team/habcraft/"
       ],
       date: "2025"
     },
@@ -167,6 +168,7 @@ export const portfolio = {
         "NASA Space Apps '24",
         "Human Development & the Environment",
         "United Nations Sustainable Development Goals (UN SDGs)",
+        "https://www.spaceappschallenge.org/nasa-space-apps-2024/find-a-team/geoequa/"
       ],
       date: "2024"
     },
