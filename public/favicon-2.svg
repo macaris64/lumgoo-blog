@@ -1,0 +1,28 @@
+<!-- favicon.svg — "💫" temalı, light/dark moda uyumlu -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    :root { --icon: #111; }                    /* Açık tema rengi */
+    @media (prefers-color-scheme: dark) {
+      :root { --icon: #fff; }                  /* Koyu tema rengi */
+    }
+    .stroke { fill: none; stroke: var(--icon); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+    .fill   { fill: var(--icon); }
+  </style>
+
+  <!-- Hafif bir "yörünge/iverme" izi -->
+  <path class="stroke" d="M8 44c6-10 19-16 34-14M12 52c9-6 22-8 34-5" opacity=".85"/>
+
+  <!-- Büyük 5 uçlu yıldız (dizzy/💫 etkisi) -->
+  <path class="fill" d="M36.5 18.5l2.6 6.9 7.4.6-5.7 4.5 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2-5.7-4.5 7.4-.6 2.6-6.9z"/>
+
+  <!-- Küçük parıltılar -->
+  <g class="fill" opacity=".95">
+    <!-- Dört köşeli küçük ışıltı -->
+    <path d="M20 22l2 2-2 2-2-2 2-2z"/>
+    <!-- Minik yıldız -->
+    <path d="M48 38l1.2 2.8 3 .2-2.3 1.9.8 2.9-2.7-1.7-2.7 1.7.8-2.9-2.3-1.9 3-.2L48 38z"/>
+  </g>
+
+  <!-- İnce bir halka (ikonun bütünlüğü için) -->
+  <circle class="stroke" cx="32" cy="32" r="22" opacity=".25"/>
+</svg>

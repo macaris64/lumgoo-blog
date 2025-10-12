@@ -2,6 +2,8 @@
 
 Modern static blog - A fully static blog system built with Astro 4 and TypeScript.
 
+https://lumgoo.com
+
 ## 🚀 Features
 
 - ✅ Static site generation with **Astro 4**
@@ -182,6 +184,11 @@ The blog is designed to be responsive and display properly on all devices:
 - Optimized CSS
 - Minimal JavaScript
 - SEO-friendly URL structure
+
+## Useful Links
+
+https://lumgoo.com
+https://markdownlivepreview.com/
 
 ## 📄 License
 
