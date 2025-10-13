@@ -21,6 +21,8 @@ aiGenerated: true
 
 # Jane Goodall: From Gombe to a Planetary Voice for Conservation
 
+![Jane Goodall](../../../public/images/posts/jane-goodall-from-gombe-to-a-planetary-voice-for-conservation/jane-goodall.png)
+
 In the panorama of twentieth-century science, few figures have so gracefully united empirical rigor with moral conviction as Dame Jane Goodall. Her journey—from an inquisitive child in wartime London to a globally recognized advocate for animal welfare and environmental ethics—has fundamentally reshaped our understanding of the boundary between humans and other species. Her work at Gombe Stream National Park did more than document the behavior of chimpanzees; it initiated a paradigm shift in ethology, conservation, and the philosophy of coexistence.
 
 ## Early Life and the Seeds of Curiosity
