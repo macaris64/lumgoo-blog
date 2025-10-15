@@ -12,8 +12,8 @@ const args = process.argv.slice(2);
 const title = args[0];
 
 if (!title) {
-  console.error('❌ Lütfen bir başlık girin:');
-  console.log('Kullanım: npm run new-post "Yazı Başlığı"');
+  console.error('❌ Please provide a title for the new post:');
+  console.log('Usage: npm run new-post "Title of the Post"');
   process.exit(1);
 }
 
@@ -32,24 +32,27 @@ const date = now.toISOString().split('T')[0];
 // Create post content
 const postContent = `---
 title: "${title}"
-slug: "${slug}"
-description: "Yazı açıklaması buraya gelir"
+description: "Here is the description of your post."
 date: ${date}
-tags: ["etiket1", "etiket2"]
+category: "Your category"
+subcategory: "Your Subcategory"
+tags: ["tag1", "tag2"]
+slug: "${slug}"
 draft: false
+aiGenerated: false
 ---
 
 # ${title}
 
-Yazınızın içeriği buraya gelir...
+Here is the content of your post.
 
-## Alt Başlık
+## Subtitle
 
-İçerik devam eder...
+Content of the subheading.
 
-## Sonuç
+## Conclusion
 
-Yazının sonucu buraya gelir.
+Content of the result.
 `;
 
 // Ensure posts directory exists
@@ -63,21 +66,21 @@ const filePath = join(postsDir, `${slug}.md`);
 
 // Check if file already exists
 if (existsSync(filePath)) {
-  console.error(`❌ "${slug}.md" dosyası zaten mevcut!`);
+  console.error(`❌ "${slug}.md" file already exists. Please choose a different slug.`);
   process.exit(1);
 }
 
 // Write file
 try {
   writeFileSync(filePath, postContent, 'utf8');
-  console.log(`✅ Yeni yazı oluşturuldu: ${filePath}`);
-  console.log(`📝 Başlık: ${title}`);
+  console.log(`✅ New article created: ${filePath}`);
+  console.log(`📝 Title: ${title}`);
   console.log(`🔗 Slug: ${slug}`);
-  console.log(`📅 Tarih: ${date}`);
-  console.log(`📁 Dosya: src/content/posts/${slug}.md`);
+  console.log(`📅 Date: ${date}`);
+  console.log(`📁 File: src/content/posts/${slug}.md`);
   console.log('');
-  console.log('💡 İpucu: Yazıyı düzenlemek için dosyayı açın ve içeriği güncelleyin.');
+  console.log('💡 Hint: You can now start writing your post in the file.');
 } catch (error) {
-  console.error('❌ Dosya oluşturulurken hata oluştu:', error.message);
+  console.error('❌ An error occurred', error.message);
   process.exit(1);
 }
