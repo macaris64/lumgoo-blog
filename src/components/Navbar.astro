@@ -48,6 +48,14 @@ const currentPath = Astro.url.pathname;
           Blog
         </a>
       </li>
+      <li>
+        <a 
+          href="/apps" 
+          class={`navbar-link ${currentPath.startsWith('/apps') ? 'active' : ''}`}
+        >
+          Apps
+        </a>
+      </li>
     </ul>
   </div>
 </nav>

@@ -1,0 +1,132 @@
+---
+import Layout from '../../components/Layout.astro';
+import { apps } from '../../data/apps';
+import '../../styles/global.css';
+
+const title = "Our Apps";
+const description = "Discover our latest mobile applications designed to improve your life.";
+---
+
+<Layout title={title} description={description}>
+  <section class="section">
+    <h1 class="page-title">Apps</h1>
+    
+    <div class="apps-grid">
+      {apps.map(app => (
+        <div class="app-card">
+          <div class="app-content">
+            <h2 class="app-title">{app.title}</h2>
+            <p class="app-description">{app.description}</p>
+            
+            <div class="app-links">
+              <a href={app.link} class="store-link">Download</a>
+              <a href={app.policyLink} class="privacy-link">Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid #667eea;
+  }
+
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .app-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .app-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+  }
+
+  .app-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .app-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .store-link {
+    background: #667eea;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+
+  .store-link:hover {
+    background: #5a67d8;
+  }
+
+  .privacy-link {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+
+  .privacy-link:hover {
+    color: #1f2937;
+    text-decoration: underline;
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 768px) {
+    .apps-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .section {
+        padding: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .apps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
