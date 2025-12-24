@@ -5,7 +5,7 @@ export const portfolio = {
     location: "Istanbul, Turkey",
     email: "mehmetacar683@gmail.com",
     phone: "+90 599 999 9999",
-    website: "https://lumgoo.com",
+    website: "https://macar.space",
     github: "https://github.com/macaris64",
     linkedin: "https://linkedin.com/in/mehmetacar",
     twitter: "https://x.com/lumgoo",

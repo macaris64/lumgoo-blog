@@ -2,7 +2,7 @@
 
 Modern static blog - A fully static blog system built with Astro 4 and TypeScript.
 
-https://lumgoo.com
+https://macar.space
 
 ## 🚀 Features
 
@@ -187,7 +187,7 @@ The blog is designed to be responsive and display properly on all devices:
 
 ## Useful Links
 
-https://lumgoo.com
+https://macar.space
 https://markdownlivepreview.com/
 
 ## 📄 License

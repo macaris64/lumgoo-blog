@@ -35,7 +35,7 @@ it transforms free-form generation into intentional authorship.
 
 # General Definition
 
-[content-llm-builder-schema.v0.1](https://lumgoo.com/posts/content-llm-builder-schemav01) is a JSON-based configuration schema that defines every possible dimension of content generation.
+[content-llm-builder-schema.v0.1](https://macar.space/posts/content-llm-builder-schemav01) is a JSON-based configuration schema that defines every possible dimension of content generation.
 
 > Defines all possible content configuration keys, their allowed values, and output control rules for the LLM content builder.
 
