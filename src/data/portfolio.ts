@@ -2,7 +2,7 @@ export const portfolio = {
     profile: {
     name: "Mehmet Acar",
     title: "Software Engineer",
-    location: "Istanbul, Turkey",
+    location: "Istanbul, Türkiye",
     email: "mehmetacar683@gmail.com",
     phone: "+90 599 999 9999",
     website: "https://macar.space",
@@ -129,7 +129,7 @@ export const portfolio = {
     {
       institution: "Pamukkale University",
       logo: "/images/education/pau-logo.png",
-      degree: "Bachelor of Science",
+      degree: "Bachelor of Engineering (BEng)",
       field: "Computer Engineering",
       location: "Denizli, Türkiye",
       startDate: "2015-09",
@@ -153,7 +153,8 @@ export const portfolio = {
       highlights: [
         "NASA Space Apps '25",
         "Build a Space Biology Knowledge Engine",
-        "https://www.spaceappschallenge.org/2025/find-a-team/habcraft/"
+        "https://www.spaceappschallenge.org/2025/find-a-team/habcraft/",
+        "Scientific Research and Discovery"
       ],
       date: "2025"
     },
@@ -163,12 +164,13 @@ export const portfolio = {
       image: "/images/projects/nasa-logo.jpg",
       url: "https://geoequa.vercel.app/",
       github: "https://github.com/macaris64/geoequa",
-      technologies: ["Typescript", "React", "OpenAI", "LLM"],
+      technologies: ["Typescript", "React", "OpenAI", "LLM", "Sustainable Development Goals"],
       highlights: [
         "NASA Space Apps '24",
         "Human Development & the Environment",
         "United Nations Sustainable Development Goals (UN SDGs)",
-        "https://www.spaceappschallenge.org/nasa-space-apps-2024/find-a-team/geoequa/"
+        "https://www.spaceappschallenge.org/nasa-space-apps-2024/find-a-team/geoequa/",
+        "https://sdgs.un.org/goals"
       ],
       date: "2024"
     },
@@ -251,6 +253,19 @@ export const portfolio = {
   },
 
   volunteer: [
+    {
+      organization: "IEEE",
+      logo: "/images/volunteer/ieee-logo.png",
+      role: "Member",
+      startDate: "2026-02",
+      endDate: "2026-12",
+      current: true,
+      description: "",
+      activities: [
+          "I follow publications from the IEEE Aerospace and Electronic Systems Society (IEEE - AESS).",
+          "https://ieee-aess.org/"
+      ]
+    },
     {
       organization: "IT Society",
       logo: "/images/education/pau-logo.png",
