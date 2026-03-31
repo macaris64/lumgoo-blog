@@ -140,6 +140,30 @@ export const portfolio = {
 
   projects: [
     {
+      name: "GökServis (TUA Astro Hackathon '26)",
+      description:
+        " GökServis is Turkey’s first in-orbit servicing company, dedicated to supporting satellites that face premature retirement due to fuel depletion or system failures. By leveraging the cost advantages of the equatorial launch base in Somalia, GökServis combines a permanent orbital fuel depot (KUTAY) with a dedicated service vehicle (GEZGİN). This infrastructure allows satellite operators to extend the life of their assets at a fraction of the cost and time required to procure and launch a new satellite.",
+      image: "/images/projects/tua-logo.jpg",
+      url: "https://gokservis.space/",
+      github: "https://github.com/macaris64/gokservis",
+      technologies: [
+        "New Space",
+        "Astronomy",
+        "React",
+        "Three.js",
+        "SPaaS",
+        "Aerospace",
+        "In-orbit Servicing",
+      ],
+      highlights: [
+        "TUA Astro Hackathon '26",
+        "Space as a Service (SPaaS)",
+        "https://tuaastrohackathon.com/tr/astro-hackathon-2026/2026-local-events/usak/teams/new-space",
+        "In-orbit servicing and satellite life extension",
+      ],
+      date: "2026",
+    },
+    {
       name: "OpenBio Cosmos (NASA Space Apps '25)",
       description:
         " OpenBio Cosmos is an AI-powered knowledge atlas that transforms decades of NASA and NIH bioscience data into an interactive, explorable platform. Using datasets from NASA’s Open Science Data Repository (OSDR) and NIH PubMed, we developed a lightweight web application that classifies, visualizes, and connects biological studies through an intuitive interface. Our system parses XML data, processes it with a large language model (LLM), and generates structured JSON outputs that feed into three main tools — the Atlas, Knowledge Atlas, and Article Explorer. This approach helps researchers quickly identify relationships between experiments, organs, and biological systems, bridging the gap between raw data and scientific discovery. By integrating 5,000+ articles with over 90% AI classification accuracy, OpenBio Cosmos directly addresses the “Build a Space Biology Knowledge Engine” challenge — making space bioscience more accessible, searchable, and connected. It empowers the community to Learn, Launch, and Lead the next era of human space exploration.",
