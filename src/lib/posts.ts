@@ -1,10 +1,10 @@
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
-export type Post = CollectionEntry<'posts'>;
+export type Post = CollectionEntry<"posts">;
 
 export async function getAllPosts(): Promise<Post[]> {
-  const posts = await getCollection('posts');
+  const posts = await getCollection("posts");
   return posts
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -37,10 +37,7 @@ export interface PaginationResult {
   hasPrev: boolean;
 }
 
-export async function paginate(
-  page: number = 1,
-  perPage: number = 5
-): Promise<PaginationResult> {
+export async function paginate(page: number = 1, perPage: number = 5): Promise<PaginationResult> {
   const allPosts = await getAllPosts();
   const totalPages = Math.ceil(allPosts.length / perPage);
   const startIndex = (page - 1) * perPage;

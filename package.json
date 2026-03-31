@@ -8,7 +8,14 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "new-post": "node scripts/new-post.mjs"
+    "new-post": "node scripts/new-post.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "stylelint": "stylelint \"src/**/*.css\"",
+    "stylelint:fix": "stylelint \"src/**/*.css\" --fix",
+    "typecheck": "astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.0.0",
@@ -18,7 +25,17 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.3.0",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^20.0.0",
-    "typescript": "^5.0.0"
+    "@typescript-eslint/parser": "^8.58.0",
+    "eslint": "^10.1.0",
+    "eslint-plugin-astro": "^1.6.0",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
+    "stylelint": "^17.6.0",
+    "stylelint-config-standard": "^40.0.0",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.58.0"
   }
 }
