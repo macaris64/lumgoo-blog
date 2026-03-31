@@ -1,7 +1,7 @@
 ---
-import Layout from '../../components/Layout.astro';
-import { apps } from '../../data/apps';
-import '../../styles/global.css';
+import Layout from "../../components/Layout.astro";
+import { apps } from "../../data/apps";
+import "../../styles/global.css";
 
 const title = "Our Apps";
 const description = "Discover our latest mobile applications designed to improve your life.";
@@ -10,21 +10,27 @@ const description = "Discover our latest mobile applications designed to improve
 <Layout title={title} description={description}>
   <section class="section">
     <h1 class="page-title">Apps</h1>
-    
+
     <div class="apps-grid">
-      {apps.map(app => (
-        <div class="app-card">
-          <div class="app-content">
-            <h2 class="app-title">{app.title}</h2>
-            <p class="app-description">{app.description}</p>
-            
-            <div class="app-links">
-              <a href={app.link} class="store-link">Download</a>
-              <a href={app.policyLink} class="privacy-link">Privacy Policy</a>
+      {
+        apps.map((app) => (
+          <div class="app-card">
+            <div class="app-content">
+              <h2 class="app-title">{app.title}</h2>
+              <p class="app-description">{app.description}</p>
+
+              <div class="app-links">
+                <a href={app.link} class="store-link">
+                  Download
+                </a>
+                <a href={app.policyLink} class="privacy-link">
+                  Privacy Policy
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </section>
 </Layout>
@@ -56,14 +62,16 @@ const description = "Discover our latest mobile applications designed to improve
     border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 1.5rem;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition:
+      transform 0.3s,
+      box-shadow 0.3s;
     display: flex;
     flex-direction: column;
   }
 
   .app-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
 
   .app-title {
@@ -118,9 +126,9 @@ const description = "Discover our latest mobile applications designed to improve
     .apps-grid {
       grid-template-columns: 1fr;
     }
-    
+
     .section {
-        padding: 1rem;
+      padding: 1rem;
     }
   }
 

@@ -1,14 +1,14 @@
 ---
-import Layout from '../../../components/Layout.astro';
-import { apps } from '../../../data/apps';
-import { getCollection } from 'astro:content';
-import '../../../styles/global.css';
+import Layout from "../../../components/Layout.astro";
+import { apps } from "../../../data/apps";
+import { getCollection } from "astro:content";
+import "../../../styles/global.css";
 
 export async function getStaticPaths() {
-  const privacyEntries = await getCollection('privacy');
-  
-  return apps.map(app => {
-    const entry = privacyEntries.find(e => e.slug === app.id);
+  const privacyEntries = await getCollection("privacy");
+
+  return apps.map((app) => {
+    const entry = privacyEntries.find((e) => e.slug === app.id);
     return {
       params: { app_id: app.id },
       props: { app, privacyEntry: entry },
@@ -27,7 +27,7 @@ const description = `Privacy Policy for ${app.title}`;
   <section class="section">
     <div class="privacy-content">
       <h1 class="page-title">{app.title} Privacy Policy</h1>
-      
+
       <div class="markdown-content">
         {Content ? <Content /> : <p>Privacy policy content not found.</p>}
       </div>
@@ -64,7 +64,7 @@ const description = `Privacy Policy for ${app.title}`;
     line-height: 1.8;
     color: #374151;
   }
-  
+
   /* Markdown Styles */
   .markdown-content :global(h2) {
     font-size: 1.5rem;

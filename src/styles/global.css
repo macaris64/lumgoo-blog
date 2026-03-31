@@ -9,11 +9,12 @@ html {
   font-size: 16px;
   line-height: 1.6;
   scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   color: #333;
   background-color: #fff;
   min-height: 100vh;
@@ -88,11 +89,13 @@ img {
   border-radius: 8px;
   padding: 2rem;
   margin-bottom: 2rem;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
 }
 
 .post-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%);
   border-color: #d1d5db;
 }
 
@@ -176,7 +179,7 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  box-shadow: 0 1px 3px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 1px 3px rgb(139 92 246 / 30%);
 }
 
 /* Tag links */
@@ -188,7 +191,9 @@ img {
   border-radius: 9999px;
   font-size: 0.875rem;
   text-decoration: none;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .tag-link:hover {
@@ -372,7 +377,7 @@ img {
 .search-input:focus {
   outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 10%);
 }
 
 .search-results {
@@ -410,156 +415,156 @@ img {
 }
 
 /* Responsive design */
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .main {
     padding: 1.5rem;
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   html {
     font-size: 15px;
   }
-  
+
   .nav {
     padding: 1rem;
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .nav-links {
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
   }
-  
+
   .main {
     padding: 1rem;
   }
-  
+
   .post-card {
     padding: 1.5rem;
     margin-bottom: 1.5rem;
   }
-  
+
   .post-title {
     font-size: 1.25rem;
   }
-  
+
   .post-meta {
     flex-direction: column;
     gap: 0.5rem;
     align-items: flex-start;
   }
-  
+
   .pagination-links {
     flex-wrap: wrap;
     justify-content: center;
   }
-  
+
   .pagination-numbers {
     order: 1;
     width: 100%;
     justify-content: center;
     margin: 0.5rem 0;
   }
-  
+
   .pagination-prev,
   .pagination-next {
     order: 2;
   }
-  
+
   .prose {
     font-size: 1rem;
   }
-  
+
   .prose h1 {
     font-size: 1.875rem;
   }
-  
+
   .prose h2 {
     font-size: 1.5rem;
   }
-  
+
   .prose h3 {
     font-size: 1.25rem;
   }
-  
+
   .prose pre {
     padding: 1rem;
     font-size: 0.875rem;
   }
-  
+
   .prose ul,
   .prose ol {
     padding-left: 1.5rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   html {
     font-size: 14px;
   }
-  
+
   .main {
     padding: 0.75rem;
   }
-  
+
   .post-card {
     padding: 1rem;
     margin-bottom: 1rem;
   }
-  
+
   .post-title {
     font-size: 1.1rem;
   }
-  
+
   .post-category {
     font-size: 0.75rem;
   }
-  
+
   .category,
   .ai-badge {
     font-size: 0.65rem;
     padding: 0.2rem 0.5rem;
   }
-  
+
   .post-tags {
     gap: 0.35rem;
   }
-  
+
   .tag-link {
     font-size: 0.75rem;
     padding: 0.2rem 0.6rem;
   }
-  
+
   .pagination-link {
     padding: 0.4rem 0.7rem;
     font-size: 0.8rem;
     min-width: 2rem;
   }
-  
+
   .search-container {
     padding: 0 1rem;
   }
-  
+
   .search-input {
     font-size: 0.9rem;
     padding: 0.75rem;
   }
-  
+
   .prose h1 {
     font-size: 1.5rem;
   }
-  
+
   .prose h2 {
     font-size: 1.25rem;
   }
-  
+
   .prose h3 {
     font-size: 1.1rem;
   }
-  
+
   .prose pre {
     padding: 0.75rem;
     font-size: 0.8rem;

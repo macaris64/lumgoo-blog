@@ -1,28 +1,30 @@
-import type { APIRoute } from 'astro';
-import { getAllPosts } from '../lib/posts';
+import type { APIRoute } from "astro";
+import { getAllPosts } from "../lib/posts";
 
 export const prerender = true;
 
 export const GET: APIRoute = async ({ site }) => {
   const posts = await getAllPosts();
-  const siteUrl = site || 'http://localhost:4321';
-  
-  const rssItems = posts.map(post => {
-    const postUrl = `${siteUrl}/posts/${post.slug}`;
-    const pubDate = post.data.date.toUTCString();
-    
-    return `
+  const siteUrl = site || "http://localhost:4321";
+
+  const rssItems = posts
+    .map((post) => {
+      const postUrl = `${siteUrl}/posts/${post.slug}`;
+      const pubDate = post.data.date.toUTCString();
+
+      return `
       <item>
         <title><![CDATA[${post.data.title}]]></title>
         <description><![CDATA[${post.data.description}]]></description>
         <link>${postUrl}</link>
         <guid isPermaLink="true">${postUrl}</guid>
         <pubDate>${pubDate}</pubDate>
-        ${post.data.tags.map(tag => `<category><![CDATA[${tag}]]></category>`).join('')}
+        ${post.data.tags.map((tag) => `<category><![CDATA[${tag}]]></category>`).join("")}
       </item>
     `;
-  }).join('');
-  
+    })
+    .join("");
+
   const rssContent = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -35,11 +37,11 @@ export const GET: APIRoute = async ({ site }) => {
     ${rssItems}
   </channel>
 </rss>`;
-  
+
   return new Response(rssContent, {
     status: 200,
     headers: {
-      'Content-Type': 'application/xml',
+      "Content-Type": "application/xml",
     },
   });
 };

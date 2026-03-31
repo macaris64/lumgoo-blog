@@ -1,11 +1,11 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import { formatDate } from '../lib/dates';
-import { estimateReadingTime } from '../lib/readingTime';
-import TagLink from './TagLink.astro';
+import type { CollectionEntry } from "astro:content";
+import { formatDate } from "../lib/dates";
+import { estimateReadingTime } from "../lib/readingTime";
+import TagLink from "./TagLink.astro";
 
 export interface Props {
-  post: CollectionEntry<'posts'>;
+  post: CollectionEntry<"posts">;
 }
 
 const { post } = Astro.props;
@@ -16,12 +16,8 @@ const readingTime = estimateReadingTime(post.body);
   <header class="post-header">
     <div class="post-category">
       <span class="category">{post.data.category}</span>
-      {post.data.subcategory && (
-        <span class="subcategory">→ {post.data.subcategory}</span>
-      )}
-      {post.data.aiGenerated && (
-        <span class="ai-badge">🤖 AI</span>
-      )}
+      {post.data.subcategory && <span class="subcategory">→ {post.data.subcategory}</span>}
+      {post.data.aiGenerated && <span class="ai-badge">🤖 AI</span>}
     </div>
     <h2 class="post-title">
       <a href={`/posts/${post.slug}`}>{post.data.title}</a>
@@ -33,20 +29,22 @@ const readingTime = estimateReadingTime(post.body);
       <span class="reading-time">{readingTime} min read</span>
     </div>
   </header>
-  
+
   <div class="post-content">
     <p class="post-description">{post.data.description}</p>
   </div>
-  
-  {post.data.tags.length > 0 && (
-    <footer class="post-footer">
-      <div class="post-tags">
-        {post.data.tags.map(tag => (
-          <TagLink tag={tag} />
-        ))}
-      </div>
-    </footer>
-  )}
+
+  {
+    post.data.tags.length > 0 && (
+      <footer class="post-footer">
+        <div class="post-tags">
+          {post.data.tags.map((tag) => (
+            <TagLink tag={tag} />
+          ))}
+        </div>
+      </footer>
+    )
+  }
 </article>
 
 <style>
@@ -58,7 +56,7 @@ const readingTime = estimateReadingTime(post.body);
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-  
+
   .category {
     background-color: #3b82f6;
     color: white;
@@ -66,12 +64,12 @@ const readingTime = estimateReadingTime(post.body);
     border-radius: 4px;
     font-weight: 500;
   }
-  
+
   .subcategory {
     color: #6b7280;
     font-weight: 500;
   }
-  
+
   .ai-badge {
     background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
     color: white;

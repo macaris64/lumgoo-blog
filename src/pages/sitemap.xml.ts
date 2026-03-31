@@ -1,32 +1,40 @@
-import type { APIRoute } from 'astro';
-import { getAllPosts, getAllTags } from '../lib/posts';
-import { formatDateISO } from '../lib/dates';
+import type { APIRoute } from "astro";
+import { getAllPosts, getAllTags } from "../lib/posts";
+import { formatDateISO } from "../lib/dates";
 
 export const prerender = true;
 
 export const GET: APIRoute = async ({ site }) => {
-  const siteUrl = site || 'http://localhost:4321';
+  const siteUrl = site || "http://localhost:4321";
   const posts = await getAllPosts();
   const tags = await getAllTags();
-  
-  const postUrls = posts.map(post => `
+
+  const postUrls = posts
+    .map(
+      (post) => `
     <url>
       <loc>${siteUrl}/posts/${post.slug}</loc>
       <lastmod>${formatDateISO(post.data.date)}</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
     </url>
-  `).join('');
-  
-  const tagUrls = tags.map(tag => `
+  `,
+    )
+    .join("");
+
+  const tagUrls = tags
+    .map(
+      (tag) => `
     <url>
       <loc>${siteUrl}/tags/${tag}</loc>
       <lastmod>${formatDateISO(new Date())}</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.6</priority>
     </url>
-  `).join('');
-  
+  `,
+    )
+    .join("");
+
   const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -44,11 +52,11 @@ export const GET: APIRoute = async ({ site }) => {
   ${postUrls}
   ${tagUrls}
 </urlset>`;
-  
+
   return new Response(sitemapContent, {
     status: 200,
     headers: {
-      'Content-Type': 'application/xml',
+      "Content-Type": "application/xml",
     },
   });
 };
