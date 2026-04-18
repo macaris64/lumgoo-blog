@@ -139,12 +139,13 @@ const { profile, about, experience, education, projects, certifications, skills,
                 ))}
               </div>
               <div class="project-links">
-                <a href={project.url} target="_blank" class="project-link">
-                  🌐 Live Demo
-                </a>
-                <a href={project.github} target="_blank" class="project-link">
-                  💻 GitHub
-                </a>
+                {Object.entries(project.links)
+                  .filter(([, href]) => href.trim() !== "")
+                  .map(([label, href]) => (
+                    <a href={href} target="_blank" rel="noopener noreferrer" class="project-link">
+                      {label}
+                    </a>
+                  ))}
               </div>
             </div>
           </div>
