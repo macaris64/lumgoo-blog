@@ -140,12 +140,43 @@ export const portfolio = {
 
   projects: [
     {
+      name: "NASA cFS Apps",
+      description:
+        "Open-source tooling for NASA cFS–style missions that helps teams catch silent MsgID misconfiguration before flight. cFS apps spread numeric topic IDs across many *_topicids.h headers; when two apps reuse the same topic ID in the same Software Bus channel, computed MsgIDs can collide and messages can be misrouted with no compile-time error. cfs-msgid-guard is a TypeScript GitHub Action and CLI that scans the mission tree, computes MsgIDs, and surfaces collisions (for example via PR annotations and job summaries), published on npm. cfs-msgid-sentinel is a Python GitHub Action and CLI that applies the same four-channel collision model with CLI, JSON, and Markdown-style reporting for CI workflows, published on PyPI.",
+      image: "/images/projects/nasa-logo.jpg",
+      links: {
+        "GitHub: cfs-msgid-guard": "https://github.com/macaris64/cfs-msgid-guard",
+        "GitHub: cfs-msgid-sentinel": "https://github.com/macaris64/cfs-msgid-sentinel",
+        "npm: cfs-msgid-guard": "https://www.npmjs.com/package/cfs-msgid-guard",
+        "PyPI: cfs-msgid-sentinel": "https://pypi.org/project/cfs-msgid-sentinel/",
+      },
+      technologies: [
+        "TypeScript",
+        "Python",
+        "NASA cFS",
+        "cFE",
+        "GitHub Actions",
+        "CLI",
+        "MsgID",
+        "Flight software",
+      ],
+      highlights: [
+        "MsgID and topic ID collision detection across *_topicids.h, *_msgids.h, and related cFS headers",
+        "CI-friendly reporting: annotations, job summaries, and JSON outputs where supported",
+        "Dual stack: cfs-msgid-guard (TypeScript / npm) and cfs-msgid-sentinel (Python / PyPI)",
+        "Apache-2.0 licensed open source",
+      ],
+      date: "2026",
+    },
+    {
       name: "GökServis (TUA Astro Hackathon '26)",
       description:
         " GökServis is Turkey’s first in-orbit servicing company, dedicated to supporting satellites that face premature retirement due to fuel depletion or system failures. By leveraging the cost advantages of the equatorial launch base in Somalia, GökServis combines a permanent orbital fuel depot (KUTAY) with a dedicated service vehicle (GEZGİN). This infrastructure allows satellite operators to extend the life of their assets at a fraction of the cost and time required to procure and launch a new satellite.",
       image: "/images/projects/tua-logo.jpg",
-      url: "https://gokservis.space/",
-      github: "https://github.com/macaris64/gokservis",
+      links: {
+        "🌐 Live Demo": "https://gokservis.space/",
+        "💻 GitHub": "https://github.com/macaris64/gokservis",
+      },
       technologies: [
         "New Space",
         "Astronomy",
@@ -168,8 +199,10 @@ export const portfolio = {
       description:
         " OpenBio Cosmos is an AI-powered knowledge atlas that transforms decades of NASA and NIH bioscience data into an interactive, explorable platform. Using datasets from NASA’s Open Science Data Repository (OSDR) and NIH PubMed, we developed a lightweight web application that classifies, visualizes, and connects biological studies through an intuitive interface. Our system parses XML data, processes it with a large language model (LLM), and generates structured JSON outputs that feed into three main tools — the Atlas, Knowledge Atlas, and Article Explorer. This approach helps researchers quickly identify relationships between experiments, organs, and biological systems, bridging the gap between raw data and scientific discovery. By integrating 5,000+ articles with over 90% AI classification accuracy, OpenBio Cosmos directly addresses the “Build a Space Biology Knowledge Engine” challenge — making space bioscience more accessible, searchable, and connected. It empowers the community to Learn, Launch, and Lead the next era of human space exploration.",
       image: "/images/projects/nasa-logo.jpg",
-      url: "https://openbio.earth/",
-      github: "https://github.com/macaris64/openbio-cosmos",
+      links: {
+        "🌐 Live Demo": "https://openbio.earth/",
+        "💻 GitHub": "https://github.com/macaris64/openbio-cosmos",
+      },
       technologies: ["Three.js", "Javascript", "NASA OSDR", "NIH PubMed", "OpenAI", "LLM", "XML"],
       highlights: [
         "NASA Space Apps '25",
@@ -184,8 +217,10 @@ export const portfolio = {
       description:
         "A web application developed for the Human Development & the Environment challenge at the NASA Space Apps '24 hackathon. GeoEqua is a 'The Climate Change and Gender Inequality Risk Mapping Tool'. The project has been awarded the NASA 2024 Global Nominee.",
       image: "/images/projects/nasa-logo.jpg",
-      url: "https://geoequa.vercel.app/",
-      github: "https://github.com/macaris64/geoequa",
+      links: {
+        "🌐 Live Demo": "https://geoequa.vercel.app/",
+        "💻 GitHub": "https://github.com/macaris64/geoequa",
+      },
       technologies: ["Typescript", "React", "OpenAI", "LLM", "Sustainable Development Goals"],
       highlights: [
         "NASA Space Apps '24",
