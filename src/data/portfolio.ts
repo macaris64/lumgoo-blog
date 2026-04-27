@@ -140,7 +140,39 @@ export const portfolio = {
 
   projects: [
     {
+      name: "cFS - Space ROS Integration",
+      slug: "cfs-space-ros-integration",
+      short_description:
+        "Built with Claude Opus 4.7 at the Claude Code Hackathon (Apr 2026), integrating NASA cFS flight software with Space ROS for simulated Mars/Titan rover missions. Uses CCSDS as the data communication protocol between Rust-based cFS apps and Space ROS-powered rover cores.",
+      description:
+        "In future Mars and Titan missions, how will spacecraft, ground systems, and the ground, air, and water vehicles sent to the planet communicate? How will data communication take place? Many large teams are currently working on this. And the protocol used is clear: CCSDS. NASA has begun using cFS, whose code is now open source, embedded in spacecraft. Meanwhile, ground, air, and water rovers use SPACE ROS, the spacecraft version of the robot operating system. Data communication is also provided via CCSDS. In our project, we are communicating with cFS applications written in Rust, and rovers whose cores we developed using SPACE ROS. We are running both systems integrated.",
+      image: "/images/projects/anthropic-banner.png",
+      links: {
+        GitHub: "https://github.com/macaris64/build-with-opus/",
+        Hackathon: "https://cerebralvalley.ai/e/built-with-4-7-hackathon",
+      },
+      technologies: [
+        "AI Agents",
+        "CCSDS",
+        "Space ROS",
+        "Ground Software",
+        "Flight Software",
+        "Mission-critical Aerospace Software",
+        "Rust",
+      ],
+      highlights: [
+        "Built with Claude Opus 4.7 at the Claude Code Hackathon, Apr 21–27 2026",
+        "CCSDS data communication protocol bridging cFS and Space ROS",
+        "cFS flight software applications written in Rust",
+        "Both systems running integrated in a simulated mission environment",
+      ],
+      date: "Apr 2026",
+    },
+    {
       name: "NASA cFS Apps",
+      slug: "nasa-cfs-apps",
+      short_description:
+        "Open-source GitHub Actions and CLIs that detect silent MsgID collisions in NASA cFS mission trees before flight. Dual-stack: cfs-msgid-guard (TypeScript/npm) and cfs-msgid-sentinel (Python/PyPI).",
       description:
         "Open-source tooling for NASA cFS–style missions that helps teams catch silent MsgID misconfiguration before flight. cFS apps spread numeric topic IDs across many *_topicids.h headers; when two apps reuse the same topic ID in the same Software Bus channel, computed MsgIDs can collide and messages can be misrouted with no compile-time error. cfs-msgid-guard is a TypeScript GitHub Action and CLI that scans the mission tree, computes MsgIDs, and surfaces collisions (for example via PR annotations and job summaries), published on npm. cfs-msgid-sentinel is a Python GitHub Action and CLI that applies the same four-channel collision model with CLI, JSON, and Markdown-style reporting for CI workflows, published on PyPI.",
       image: "/images/projects/nasa-logo.jpg",
@@ -169,7 +201,10 @@ export const portfolio = {
       date: "2026",
     },
     {
-      name: "GökServis (TUA Astro Hackathon '26)",
+      name: "GökServis (TUA Astro Hackathon ‘26)",
+      slug: "gokservis",
+      short_description:
+        "Turkey’s first concept for an in-orbit servicing company, combining a permanent orbital fuel depot (KUTAY) with a dedicated service vehicle (GEZGİN). Built for TUA Astro Hackathon ‘26, leveraging Somalia’s equatorial launch base cost advantage.",
       description:
         " GökServis is Turkey’s first in-orbit servicing company, dedicated to supporting satellites that face premature retirement due to fuel depletion or system failures. By leveraging the cost advantages of the equatorial launch base in Somalia, GökServis combines a permanent orbital fuel depot (KUTAY) with a dedicated service vehicle (GEZGİN). This infrastructure allows satellite operators to extend the life of their assets at a fraction of the cost and time required to procure and launch a new satellite.",
       image: "/images/projects/tua-logo.jpg",
@@ -196,6 +231,9 @@ export const portfolio = {
     },
     {
       name: "OpenBio Cosmos (NASA Space Apps '25)",
+      slug: "openbio-cosmos",
+      short_description:
+        "An AI-powered knowledge atlas that transforms NASA and NIH bioscience data into an interactive, explorable platform for space biology research. Integrates 5,000+ articles with 90%+ AI classification accuracy, presented at NASA Space Apps '25.",
       description:
         " OpenBio Cosmos is an AI-powered knowledge atlas that transforms decades of NASA and NIH bioscience data into an interactive, explorable platform. Using datasets from NASA’s Open Science Data Repository (OSDR) and NIH PubMed, we developed a lightweight web application that classifies, visualizes, and connects biological studies through an intuitive interface. Our system parses XML data, processes it with a large language model (LLM), and generates structured JSON outputs that feed into three main tools — the Atlas, Knowledge Atlas, and Article Explorer. This approach helps researchers quickly identify relationships between experiments, organs, and biological systems, bridging the gap between raw data and scientific discovery. By integrating 5,000+ articles with over 90% AI classification accuracy, OpenBio Cosmos directly addresses the “Build a Space Biology Knowledge Engine” challenge — making space bioscience more accessible, searchable, and connected. It empowers the community to Learn, Launch, and Lead the next era of human space exploration.",
       image: "/images/projects/nasa-logo.jpg",
@@ -214,6 +252,9 @@ export const portfolio = {
     },
     {
       name: "GeoEqua (NASA Space Apps '24)",
+      slug: "geoequa",
+      short_description:
+        "A climate change and gender inequality risk mapping tool built for the NASA Space Apps '24 hackathon. Recognized as a NASA 2024 Global Nominee for its work addressing UN Sustainable Development Goals.",
       description:
         "A web application developed for the Human Development & the Environment challenge at the NASA Space Apps '24 hackathon. GeoEqua is a 'The Climate Change and Gender Inequality Risk Mapping Tool'. The project has been awarded the NASA 2024 Global Nominee.",
       image: "/images/projects/nasa-logo.jpg",
@@ -301,11 +342,11 @@ export const portfolio = {
   ],
 
   skills: {
-    Languages: ["TypeScript", "JavaScript", "Python", "Kotlin", "SQL"],
+    Languages: ["TypeScript", "JavaScript", "Python", "Kotlin", "SQL", "Rust"],
     Frontend: ["React", "Next.js", "Mobx", "GraphQL"],
     Backend: ["Node.js", "Django", "Spring Boot", "FastAPI"],
     Databases: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "DynamoDB"],
-    "Cloud & DevOps": ["Docker", "Kubernetes", "CI/CD"],
+    "Cloud & DevOps": ["Docker", "Kubernetes", "CI/CD", "GitHub Actions"],
     "Tools & Practices": [
       "Git",
       "Jest",
@@ -315,6 +356,15 @@ export const portfolio = {
       "Agile/Scrum",
       "gRPC",
     ],
+    Aerospace: [
+      "NASA cFS",
+      "CCSDS",
+      "Flight Software",
+      "Ground Software",
+      "Mission-critical Aerospace Software",
+    ],
+    "Space & Astronomy": ["Astronomy", "New Space"],
+    AI: ["AI Agents"],
   },
 
   volunteer: [
