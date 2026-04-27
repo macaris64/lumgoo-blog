@@ -227,13 +227,13 @@ export const portfolio = {
       date: "2026",
     },
     {
-      name: “OpenBio Cosmos (NASA Space Apps ‘25)”,
-      slug: “openbio-cosmos”,
+      name: "OpenBio Cosmos (NASA Space Apps '25)",
+      slug: "openbio-cosmos",
       short_description:
-        “An AI-powered knowledge atlas that transforms NASA and NIH bioscience data into an interactive, explorable platform for space biology research. Integrates 5,000+ articles with 90%+ AI classification accuracy, presented at NASA Space Apps ‘25.”,
+        "An AI-powered knowledge atlas that transforms NASA and NIH bioscience data into an interactive, explorable platform for space biology research. Integrates 5,000+ articles with 90%+ AI classification accuracy, presented at NASA Space Apps '25.",
       description:
-        “ OpenBio Cosmos is an AI-powered knowledge atlas that transforms decades of NASA and NIH bioscience data into an interactive, explorable platform. Using datasets from NASA’s Open Science Data Repository (OSDR) and NIH PubMed, we developed a lightweight web application that classifies, visualizes, and connects biological studies through an intuitive interface. Our system parses XML data, processes it with a large language model (LLM), and generates structured JSON outputs that feed into three main tools — the Atlas, Knowledge Atlas, and Article Explorer. This approach helps researchers quickly identify relationships between experiments, organs, and biological systems, bridging the gap between raw data and scientific discovery. By integrating 5,000+ articles with over 90% AI classification accuracy, OpenBio Cosmos directly addresses the “Build a Space Biology Knowledge Engine” challenge — making space bioscience more accessible, searchable, and connected. It empowers the community to Learn, Launch, and Lead the next era of human space exploration.”,
-      image: “/images/projects/nasa-logo.jpg”,
+        " OpenBio Cosmos is an AI-powered knowledge atlas that transforms decades of NASA and NIH bioscience data into an interactive, explorable platform. Using datasets from NASA’s Open Science Data Repository (OSDR) and NIH PubMed, we developed a lightweight web application that classifies, visualizes, and connects biological studies through an intuitive interface. Our system parses XML data, processes it with a large language model (LLM), and generates structured JSON outputs that feed into three main tools — the Atlas, Knowledge Atlas, and Article Explorer. This approach helps researchers quickly identify relationships between experiments, organs, and biological systems, bridging the gap between raw data and scientific discovery. By integrating 5,000+ articles with over 90% AI classification accuracy, OpenBio Cosmos directly addresses the “Build a Space Biology Knowledge Engine” challenge — making space bioscience more accessible, searchable, and connected. It empowers the community to Learn, Launch, and Lead the next era of human space exploration.",
+      image: "/images/projects/nasa-logo.jpg",
       links: {
         "🌐 Live Demo": "https://openbio.earth/",
         "💻 GitHub": "https://github.com/macaris64/openbio-cosmos",
