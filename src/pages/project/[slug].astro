@@ -12,7 +12,10 @@ export function getStaticPaths() {
 const { project } = Astro.props;
 ---
 
-<Layout title={`${project.name} — ${portfolio.profile.name}`} description={project.short_description}>
+<Layout
+  title={`${project.name} — ${portfolio.profile.name}`}
+  description={project.short_description}
+>
   <div class="project-banner">
     <img src={project.image} alt={project.name} class="banner-image" />
   </div>
@@ -31,33 +34,42 @@ const { project } = Astro.props;
     </header>
 
     <section class="article-body">
-      {project.description.trim().split(/\n\n+/).map((para) => (
-        <p>{para.trim()}</p>
-      ))}
+      {
+        project.description
+          .trim()
+          .split(/\n\n+/)
+          .map((para) => <p>{para.trim()}</p>)
+      }
     </section>
 
-    {project.highlights.length > 0 && (
-      <section class="article-highlights">
-        <ul class="highlights-list">
-          {project.highlights.map((item) => <li>{item}</li>)}
-        </ul>
-      </section>
-    )}
-
-    {Object.values(project.links).some((href) => href.trim() !== "") && (
-      <section class="article-links">
-        <h2 class="links-heading">Links</h2>
-        <div class="links-row">
-          {Object.entries(project.links)
-            .filter(([, href]) => href.trim() !== "")
-            .map(([label, href]) => (
-              <a href={href} target="_blank" rel="noopener noreferrer" class="link-button">
-                {label}
-              </a>
+    {
+      project.highlights.length > 0 && (
+        <section class="article-highlights">
+          <ul class="highlights-list">
+            {project.highlights.map((item) => (
+              <li>{item}</li>
             ))}
-        </div>
-      </section>
-    )}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      Object.values(project.links).some((href) => href.trim() !== "") && (
+        <section class="article-links">
+          <h2 class="links-heading">Links</h2>
+          <div class="links-row">
+            {Object.entries(project.links)
+              .filter(([, href]) => href.trim() !== "")
+              .map(([label, href]) => (
+                <a href={href} target="_blank" rel="noopener noreferrer" class="link-button">
+                  {label}
+                </a>
+              ))}
+          </div>
+        </section>
+      )
+    }
   </div>
 </Layout>
 
@@ -198,7 +210,9 @@ const { project } = Astro.props;
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
-    transition: opacity 0.2s, transform 0.2s;
+    transition:
+      opacity 0.2s,
+      transform 0.2s;
   }
 
   .link-button:hover {
