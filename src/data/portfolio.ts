@@ -301,11 +301,11 @@ export const portfolio = {
   ],
 
   skills: {
-    Languages: ["TypeScript", "JavaScript", "Python", "Kotlin", "SQL"],
+    Languages: ["TypeScript", "JavaScript", "Python", "Kotlin", "SQL", "Rust"],
     Frontend: ["React", "Next.js", "Mobx", "GraphQL"],
     Backend: ["Node.js", "Django", "Spring Boot", "FastAPI"],
     Databases: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "DynamoDB"],
-    "Cloud & DevOps": ["Docker", "Kubernetes", "CI/CD"],
+    "Cloud & DevOps": ["Docker", "Kubernetes", "CI/CD", "GitHub Actions"],
     "Tools & Practices": [
       "Git",
       "Jest",
@@ -315,6 +315,15 @@ export const portfolio = {
       "Agile/Scrum",
       "gRPC",
     ],
+    Aerospace: [
+      "NASA cFS",
+      "CCSDS",
+      "Flight Software",
+      "Ground Software",
+      "Mission-critical Aerospace Software",
+    ],
+    "Space & Astronomy": ["Astronomy", "New Space"],
+    AI: ["AI Agents"],
   },
 
   volunteer: [
