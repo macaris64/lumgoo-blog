@@ -147,7 +147,10 @@ export const portfolio = {
       description:
         "In future Mars and Titan missions, how will spacecraft, ground systems, and the ground, air, and water vehicles sent to the planet communicate? How will data communication take place? Many large teams are currently working on this. And the protocol used is clear: CCSDS. NASA has begun using cFS, whose code is now open source, embedded in spacecraft. Meanwhile, ground, air, and water rovers use SPACE ROS, the spacecraft version of the robot operating system. Data communication is also provided via CCSDS. In our project, we are communicating with cFS applications written in Rust, and rovers whose cores we developed using SPACE ROS. We are running both systems integrated.",
       image: "/images/projects/anthropic-banner.png",
-      links: {},
+      links: {
+        GitHub: "https://github.com/macaris64/build-with-opus/",
+        Hackathon: "https://cerebralvalley.ai/e/built-with-4-7-hackathon",
+      },
       technologies: [
         "AI Agents",
         "CCSDS",
