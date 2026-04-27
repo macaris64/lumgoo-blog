@@ -140,6 +140,32 @@ export const portfolio = {
 
   projects: [
     {
+      name: "cFS - Space ROS Integration",
+      slug: "cfs-space-ros-integration",
+      short_description:
+        "Built with Claude Opus 4.7 at the Claude Code Hackathon (Apr 2026), integrating NASA cFS flight software with Space ROS for simulated Mars/Titan rover missions. Uses CCSDS as the data communication protocol between Rust-based cFS apps and Space ROS-powered rover cores.",
+      description:
+        "In future Mars and Titan missions, how will spacecraft, ground systems, and the ground, air, and water vehicles sent to the planet communicate? How will data communication take place? Many large teams are currently working on this. And the protocol used is clear: CCSDS. NASA has begun using cFS, whose code is now open source, embedded in spacecraft. Meanwhile, ground, air, and water rovers use SPACE ROS, the spacecraft version of the robot operating system. Data communication is also provided via CCSDS. In our project, we are communicating with cFS applications written in Rust, and rovers whose cores we developed using SPACE ROS. We are running both systems integrated.",
+      image: "/images/projects/anthropic-banner.png",
+      links: {},
+      technologies: [
+        "AI Agents",
+        "CCSDS",
+        "Space ROS",
+        "Ground Software",
+        "Flight Software",
+        "Mission-critical Aerospace Software",
+        "Rust",
+      ],
+      highlights: [
+        "Built with Claude Opus 4.7 at the Claude Code Hackathon, Apr 21–27 2026",
+        "CCSDS data communication protocol bridging cFS and Space ROS",
+        "cFS flight software applications written in Rust",
+        "Both systems running integrated in a simulated mission environment",
+      ],
+      date: "Apr 2026",
+    },
+    {
       name: "NASA cFS Apps",
       slug: "nasa-cfs-apps",
       short_description:
